@@ -6,11 +6,12 @@ import codeIcon from "../../assets/code.svg";
 import ideasIcon from "../../assets/ideas.svg";
 import conceptsIcon from "../../assets/concepts.svg";
 import designsIcon from "../../assets/designs.svg";
-
 import Medusae from "../Medusae/Medusae";
+import { T } from "../../constants/theme";
 
-const Hero = ({ onComplete }) => {
+const Hero = ({ onComplete, isDark }) => {
   const [isFinished, setIsFinished] = useState(false);
+  const t = isDark ? T.dark : T.light;
 
   // Animation State
   const fullText = "Shaping Code into Real Projects\nthat Deliver Results";
@@ -79,12 +80,15 @@ const Hero = ({ onComplete }) => {
   }, [isFinished]);
 
   return (
-    <section className="h-screen w-full bg-black flex flex-col items-center justify-center relative overflow-hidden z-40">
+    <section
+      className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden z-40 transition-colors duration-500"
+      style={{ backgroundColor: t.background }}
+    >
       <div className="hero-container relative z-20">
         {/* Typing Phase - Always visible until finished, then replaced by slider version */}
         {!isFinished ? (
           <div className="typing-container">
-            <h1 className="typing-text relative">
+            <h1 className="typing-text relative" style={{ color: t.heroText }}>
               {fullText.split("").map((char, index) => {
                 const isTyped = index < currentIndex;
                 const isLastChar = index === fullText.length - 1;
@@ -113,7 +117,10 @@ const Hero = ({ onComplete }) => {
           </div>
         ) : (
           <div className="typing-container">
-            <h1 className="typing-text relative flex flex-col items-center">
+            <h1
+              className="typing-text relative flex flex-col items-center"
+              style={{ color: t.heroText }}
+            >
               <div className="flex items-center flex-wrap justify-center gap-2 md:gap-4">
                 <span>Shaping</span>
 
@@ -130,7 +137,7 @@ const Hero = ({ onComplete }) => {
                       <img
                         src={sliderItems[sliderIndex].icon}
                         alt=""
-                        className="h-10 object-contain invert brightness-0 filter"
+                        className={`h-10 object-contain ${isDark ? "invert brightness-0 filter" : ""}`}
                       />
                       <span>{sliderItems[sliderIndex].text}</span>
                     </motion.div>
@@ -154,7 +161,10 @@ const Hero = ({ onComplete }) => {
           !isFinished ? "pointer-events-none select-none" : ""
         }`}
       >
-        <p className="text-white-50 md:text-xl relative z-10 pointer-events-none text-center">
+        <p
+          className="md:text-xl relative z-10 pointer-events-none text-center transition-colors duration-500"
+          style={{ color: t.heroSubtitle }}
+        >
           Hi, I am Lokesh , A Developer based in India with a Passion for Code.
         </p>
 
@@ -170,9 +180,9 @@ const Hero = ({ onComplete }) => {
         <div className="absolute inset-0 z-0">
           <Medusae
             config={{
-              background: { color: "#000000" },
+              background: { color: t.background },
               particles: {
-                colorBase: "#4a4a4a",
+                colorBase: isDark ? "#4a4a4a" : "#9ca3af",
                 colorOne: "#64b5f6",
                 colorTwo: "#ff6d00",
                 colorThree: "#ffd600",
@@ -184,7 +194,9 @@ const Hero = ({ onComplete }) => {
 
       {/* Normal Background Glow */}
       {isFinished && (
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black pointer-events-none z-10 opacity-80" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-b from-transparent via-transparent ${isDark ? "to-black" : "to-white"} pointer-events-none z-10 opacity-80 transition-colors duration-500`}
+        />
       )}
     </section>
   );
