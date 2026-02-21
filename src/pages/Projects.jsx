@@ -36,6 +36,20 @@ const Projects = ({ isDark = true }) => {
   const authorRef = useRef(null);
 
   const [animateIn, setAnimateIn] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  // Detect screen size
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      setIsTablet(window.innerWidth > 768 && window.innerWidth <= 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Trigger entrance animations on scroll into view
   useEffect(() => {
@@ -66,7 +80,9 @@ const Projects = ({ isDark = true }) => {
     <div
       id="projects-section"
       ref={projectRef}
-      className="relative w-full h-screen overflow-hidden transition-colors duration-500"
+      className={`relative w-full h-screen overflow-hidden transition-colors duration-500 ${
+        isMobile ? "is-mobile" : isTablet ? "is-tablet" : "is-desktop"
+      }`}
       style={{
         backgroundColor: isDark ? "#000000" : "#ffffff",
         color: isDark ? "#ffffff" : "#111111",
@@ -76,21 +92,18 @@ const Projects = ({ isDark = true }) => {
       <div className="relative z-10 w-full h-full">
         {/* 3-D rotating image carousel */}
         <div
-          className="absolute top-1/2 left-11/20 -translate-x-1/2 -translate-y-1/2 z-3"
+          className="carousel-container absolute z-3"
           style={{
-            width: "180px",
-            height: "220px",
             transformStyle: "preserve-3d",
-            transform: "translate(-50%, -50%) perspective(1200px)",
             animation: "autoRun 20s linear infinite",
           }}
         >
           {projectImages.map((img, index) => (
             <div
               key={index}
-              className="absolute inset-0"
+              className="carousel-item absolute inset-0"
               style={{
-                transform: `rotateY(${index * (360 / projectImages.length)}deg) translateZ(500px)`,
+                "--i": index,
               }}
             >
               <img
@@ -107,11 +120,11 @@ const Projects = ({ isDark = true }) => {
           {/* "Project" heading */}
           <div
             ref={projectTextRef}
-            className={`absolute top-1/2 left-10 ${fadeSlide("0ms").className}`}
+            className={`project-heading absolute ${fadeSlide("0ms").className}`}
             style={fadeSlide("0ms").style}
           >
             <h1
-              className="text-[12em] leading-none font-black transition-colors duration-500"
+              className="leading-none font-black transition-colors duration-500"
               style={{
                 fontFamily: "Ica Rubrik Black",
                 color: isDark ? "#e0e0e0" : "#94e7f6",
@@ -124,10 +137,10 @@ const Projects = ({ isDark = true }) => {
           {/* Model / hero background image */}
           <div
             ref={modelBgRef}
-            className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1 ${fadeSlide("400ms").className}`}
+            className={`model-bg absolute -translate-x-1/2 -translate-y-1/2 z-1 ${
+              fadeSlide("400ms").className
+            }`}
             style={{
-              width: "100%",
-              height: "80vh",
               backgroundImage: `url('${ModelBg}')`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
@@ -139,13 +152,14 @@ const Projects = ({ isDark = true }) => {
           {/* "Works" outline text */}
           <h1
             ref={worksTextRef}
-            className={`absolute top-[70%] left-3/10 -translate-x-1/2 text-[12em] z-2 ${fadeSlide("800ms").className}`}
+            className={`works-heading absolute -translate-x-1/2 z-2 ${
+              fadeSlide("800ms").className
+            }`}
             style={{
               WebkitTextStroke: isDark ? "2px white" : "2px #1a1a1a",
               color: "transparent",
               letterSpacing: "2px",
               fontWeight: "900",
-              bottom: "10px",
               ...fadeSlide("800ms").style,
             }}
           >
@@ -155,17 +169,19 @@ const Projects = ({ isDark = true }) => {
           {/* Author block */}
           <div
             ref={authorRef}
-            className={`absolute bottom-10 right-10 text-right z-40 ${fadeSlide("1200ms").className}`}
+            className={`author-block absolute z-40 ${
+              fadeSlide("1200ms").className
+            }`}
             style={fadeSlide("1200ms").style}
           >
             <h2
-              className="text-[3.5em] whitespace-nowrap leading-none font-bold transition-colors duration-500"
+              className="whitespace-nowrap leading-none font-bold transition-colors duration-500"
               style={{ color: isDark ? "#ffffff" : "#111111" }}
             >
               Lokesh Patil
             </h2>
             <p
-              className="text-[1.8em] font-semibold transition-colors duration-500"
+              className="font-semibold transition-colors duration-500"
               style={{ color: isDark ? "#94a3b8" : "#4b5563" }}
             >
               MERN Developer

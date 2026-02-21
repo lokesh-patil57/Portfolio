@@ -1,10 +1,337 @@
-/* ─── Projects Section Animations ─────────────────────────────────────────── */
+/* ─── Projects Section Animations (Desktop Unchanged) ───────────────────── */
 
 @keyframes autoRun {
   from {
-    transform: translate(-50%, -50%) perspective(1200px) rotateX(-10deg) rotateY(0deg);
+    transform: translate(-50%, -50%) perspective(1200px) rotateX(-10deg)
+      rotateY(0deg);
   }
   to {
-    transform: translate(-50%, -50%) perspective(1200px) rotateX(-10deg) rotateY(360deg);
+    transform: translate(-50%, -50%) perspective(1200px) rotateX(-10deg)
+      rotateY(360deg);
   }
+}
+
+/* ========================================================= */
+/* ================= BASE / SHARED STYLES ================== */
+/* ========================================================= */
+
+#projects-section .carousel-container {
+  width: 180px;
+  height: 220px;
+  position: absolute;
+  z-index: 4;
+  transform-style: preserve-3d;
+  animation: autoRun 20s linear infinite;
+  /* Default transform to match animation start */
+  transform: translate(-50%, -50%) perspective(1200px) rotateX(-10deg)
+    rotateY(0deg);
+}
+
+#projects-section .carousel-item {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(calc(var(--i) * 36deg)) translateZ(500px);
+}
+
+#projects-section .model-bg {
+  position: absolute;
+  z-index: 3;
+  width: 100%;
+  height: 80vh;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transform: translate(-50%, -50%);
+}
+
+#projects-section .project-heading {
+  position: absolute;
+  z-index: 1;
+}
+
+#projects-section .works-heading {
+  position: absolute;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+#projects-section .author-block {
+  position: absolute;
+  z-index: 40;
+  text-align: center;
+}
+
+/* ========================================================= */
+/* ================= DESKTOP STYLES ======================== */
+/* ========================================================= */
+
+/* Base styles / Desktop default */
+#projects-section.is-desktop .carousel-container,
+#projects-section:not(.is-mobile):not(.is-tablet) .carousel-container {
+  top: 30% !important;
+  left: 50% !important;
+}
+
+#projects-section.is-desktop .carousel-item,
+#projects-section:not(.is-mobile):not(.is-tablet) .carousel-item {
+  transform: rotateY(calc(var(--i) * 36deg)) translateZ(380px) !important;
+}
+
+#projects-section.is-desktop .project-heading,
+#projects-section:not(.is-mobile):not(.is-tablet) .project-heading {
+  top: 50% !important;
+  left: 2.5rem !important;
+}
+
+/* DESKTOP Typography */
+#projects-section.is-desktop .project-heading h1,
+#projects-section:not(.is-mobile):not(.is-tablet) .project-heading h1 {
+  font-size: 12em !important;
+}
+
+#projects-section.is-desktop .works-heading,
+#projects-section:not(.is-mobile):not(.is-tablet) .works-heading {
+  font-size: 11em !important;
+}
+
+#projects-section.is-desktop .author-block h2,
+#projects-section:not(.is-mobile):not(.is-tablet) .author-block h2 {
+  font-size: 3.5em !important;
+}
+
+#projects-section.is-desktop .author-block p,
+#projects-section:not(.is-mobile):not(.is-tablet) .author-block p {
+  font-size: 1.8em !important;
+}
+
+#projects-section.is-desktop .model-bg,
+#projects-section:not(.is-mobile):not(.is-tablet) .model-bg {
+  top: 60% !important;
+  left: 100% !important;
+  width: 100% !important;
+  height: 80vh !important;
+}
+
+#projects-section.is-desktop .works-heading,
+#projects-section:not(.is-mobile):not(.is-tablet) .works-heading {
+  top: 70% !important;
+  left: 50% !important;
+}
+
+#projects-section.is-desktop .author-block,
+#projects-section:not(.is-mobile):not(.is-tablet) .author-block {
+  bottom: 2.5rem !important;
+  right: 2.5rem !important;
+}
+
+/* ========================================================= */
+/* ================= TABLET STYLES ========================= */
+/* ========================================================= */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  #projects-section:not(.is-desktop):not(.is-mobile) .carousel-container {
+    top: 45% !important;
+    left: 55% !important;
+    width: 140px !important;
+    height: 80px !important;
+    animation-duration: 25s !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .carousel-item {
+    transform: rotateY(calc(var(--i) * 36deg)) translateZ(400px) !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .project-heading {
+    left: 50% !important;
+    top: 75% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .works-heading {
+    top: 82% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .model-bg {
+    height: 60vh !important;
+    top: 45% !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .author-block {
+    bottom: 50px !important;
+    right: 40px !important;
+    text-align: right !important;
+  }
+
+  /* TABLET Typography (Media Query) */
+  #projects-section:not(.is-desktop):not(.is-mobile) .project-heading h1 {
+    font-size: 8em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .works-heading {
+    font-size: 8em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .author-block h2 {
+    font-size: 2.5em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-mobile) .author-block p {
+    font-size: 1.3em !important;
+  }
+}
+
+/* Explicit class-based tablet styles as requested */
+#projects-section.is-tablet .carousel-container {
+  top: 45% !important;
+  left: 55% !important;
+  width: 140px !important;
+  height: 180px !important;
+  animation-duration: 25s !important;
+}
+#projects-section.is-tablet .carousel-item {
+  transform: rotateY(calc(var(--i) * 36deg)) translateZ(400px) !important;
+}
+#projects-section.is-tablet .project-heading {
+  left: 50% !important;
+  top: 75% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+#projects-section.is-tablet .works-heading {
+  top: 82% !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+#projects-section.is-tablet .model-bg {
+  height: 60vh !important;
+  top: 45% !important;
+  left: 50% !important;
+}
+#projects-section.is-tablet .author-block {
+  bottom: 50px !important;
+  right: 40px !important;
+  text-align: right !important;
+}
+
+#projects-section.is-tablet .project-heading h1 {
+  font-size: 8em !important;
+}
+#projects-section.is-tablet .works-heading {
+  font-size: 8em !important;
+}
+#projects-section.is-tablet .author-block h2 {
+  font-size: 2.5em !important;
+}
+#projects-section.is-tablet .author-block p {
+  font-size: 1.3em !important;
+}
+
+/* ========================================================= */
+/* ================= MOBILE STYLES ========================= */
+/* ========================================================= */
+
+@media (max-width: 768px) {
+  #projects-section:not(.is-desktop):not(.is-tablet) .carousel-container {
+    top: 30% !important;
+    left: 50% !important;
+    width: 100px !important;
+    height: 140px !important;
+    animation-duration: 30s !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .project-heading {
+    left: 50% !important;
+    top: 83% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .carousel-item {
+    transform: rotateY(calc(var(--i) * 36deg)) translateZ(200px) !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .works-heading {
+    top: 90% !important;
+    left: 100% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .model-bg {
+    height: 45vh !important;
+    transform: translateX(-50%) !important;
+    top: 37% !important;
+    left: 100% !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .author-block {
+    top: 100px !important;
+    width: 100% !important;
+    text-align: center !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+
+  /* MOBILE Typography (Media Query) */
+  #projects-section:not(.is-desktop):not(.is-tablet) .project-heading h1 {
+    font-size: 4.5em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .works-heading {
+    font-size: 4.5em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .author-block h2 {
+    font-size: 1.6em !important;
+  }
+  #projects-section:not(.is-desktop):not(.is-tablet) .author-block p {
+    font-size: 1em !important;
+  }
+}
+
+/* Explicit class-based mobile styles as requested */
+#projects-section.is-mobile .carousel-container {
+  top: 40% !important;
+  left: 62% !important;
+  width: 100px !important;
+  height: 140px !important;
+  animation-duration: 30s !important;
+}
+#projects-section.is-mobile .project-heading {
+  left: 50% !important;
+  top: 85% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+#projects-section.is-mobile .carousel-item {
+  transform: rotateY(calc(var(--i) * 36deg)) translateZ(200px) !important;
+}
+#projects-section.is-mobile .works-heading {
+  top: 90% !important;
+  left: 100% !important;
+  transform: translateX(-50%) !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+#projects-section.is-mobile .model-bg {
+  height: 45vh !important;
+  top: 40% !important;
+  left: 50% !important;
+}
+#projects-section.is-mobile .author-block {
+  bottom: 60px !important;
+  width: 100% !important;
+  text-align: center !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+#projects-section.is-mobile .project-heading h1 {
+  font-size: 4.5em !important;
+}
+#projects-section.is-mobile .works-heading {
+  font-size: 4.5em !important;
+}
+#projects-section.is-mobile .author-block h2 {
+  font-size: 1.6em !important;
+}
+#projects-section.is-mobile .author-block p {
+  font-size: 1em !important;
 }
