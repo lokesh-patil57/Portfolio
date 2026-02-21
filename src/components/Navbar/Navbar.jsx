@@ -15,16 +15,17 @@ import navItems from "./navItems";
 const Navbar = ({ show = true, isDark, setIsDark }) => {
   const [activeItem, setActiveItem] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navRef = useRef(null);
-  const desktopNavRef = useRef(null);
 
-  // Cursor position for the desktop dock effect (only tracked inside the nav items area)
+  const navRef = useRef(null); // wraps the mobile top-bar for outside-click detection
+  const desktopNavRef = useRef(null); // desktop pill (for LiquidCursor)
+
+  // Shared cursor state for desktop dock effect
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
 
   // Resolve theme tokens
   const t = isDark ? T.dark : T.light;
 
-  // Close menu when clicking outside
+  // ── Close mobile menu when clicking outside ───────────────────────────────
   useEffect(() => {
     const handler = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
@@ -35,17 +36,21 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleNavMouseMove = useCallback((e) => {
-    setCursor({ x: e.clientX, y: e.clientY });
-  }, []);
-
-  const handleNavMouseLeave = useCallback(() => {
-    setCursor({ x: -9999, y: -9999 });
-  }, []);
+  // ── Desktop dock cursor handlers ──────────────────────────────────────────
+  const handleNavMouseMove = useCallback(
+    (e) => setCursor({ x: e.clientX, y: e.clientY }),
+    [],
+  );
+  const handleNavMouseLeave = useCallback(
+    () => setCursor({ x: -9999, y: -9999 }),
+    [],
+  );
 
   return (
     <>
-      {/* ══ MOBILE / TABLET top bar + dropdown ══ */}
+      {/* ════════════════════════════════════════════════════════════════════
+          MOBILE + TABLET  — top bar visible on all screens < lg
+          ════════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {show && (
           <motion.div
@@ -54,9 +59,128 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -80, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
-            className="flex lg:hidden fixed top-0 left-0 right-0 z-50 px-4 pt-4 flex-col"
+            className="hidden max-lg:flex fixed top-0 left-0 right-0 z-50 px-4 pt-4 flex-col"
           >
-            {/* Dropdown (tablet only) */}
+            {/* ── Glassmorphism top bar ─────────────────────────────────── */}
+            <motion.div
+              className="w-full flex items-center justify-between px-5 py-3 rounded-2xl relative overflow-hidden"
+              animate={{ background: t.navBg }}
+              transition={{ duration: 0.4 }}
+              style={{
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: `1px solid ${t.navBorder}`,
+                boxShadow: t.navShadow,
+              }}
+            >
+              {/* Decorative orbs */}
+              <FloatingOrb
+                delay={0}
+                style={{
+                  width: 96,
+                  height: 96,
+                  left: -24,
+                  top: -24,
+                  background: t.orb1,
+                  filter: "blur(20px)",
+                }}
+              />
+              <FloatingOrb
+                delay={2}
+                style={{
+                  width: 80,
+                  height: 80,
+                  right: -16,
+                  bottom: -16,
+                  background: t.orb2,
+                  filter: "blur(20px)",
+                }}
+              />
+
+              {/* Logo */}
+              <a
+                href="#hero"
+                className="font-bold text-xl z-10 tracking-tight"
+                style={{ color: t.textPrimary }}
+              >
+                Lokesh <span style={{ color: t.logoAccent }}>|</span> Patil
+              </a>
+
+              <div className="flex items-center gap-2 z-10">
+                {/* Active-section badge — tablet only (sm+) */}
+                <motion.span
+                  key={activeItem}
+                  initial={{ opacity: 0, scale: 0.7 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{
+                    background: t.badgeBg,
+                    border: `1px solid ${t.badgeBorder}`,
+                    color: t.badgeText,
+                  }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full inline-block"
+                    style={{ background: t.textActive }}
+                  />
+                  {navItems.find((n) => n.id === activeItem)?.label}
+                </motion.span>
+
+                {/* Theme toggle */}
+                <ThemeToggle
+                  isDark={isDark}
+                  onToggle={() => setIsDark((v) => !v)}
+                  t={t}
+                />
+
+                {/* Hamburger */}
+                <motion.button
+                  onClick={() => setIsMenuOpen((v) => !v)}
+                  whileTap={{ scale: 0.88 }}
+                  aria-label="Toggle menu"
+                  className="relative w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-xl"
+                  style={{
+                    background: isMenuOpen
+                      ? t.hamburgerActiveBg
+                      : t.hamburgerBg,
+                    border: `1px solid ${isMenuOpen ? t.hamburgerActiveBorder : t.hamburgerBorder}`,
+                  }}
+                >
+                  {[0, 1, 2].map((i) => (
+                    <motion.span
+                      key={i}
+                      className="block h-[2px] rounded-full"
+                      style={{
+                        background: t.hamburgerLine,
+                        originX: "center",
+                        width: i === 1 ? "12px" : "18px",
+                      }}
+                      animate={
+                        isMenuOpen
+                          ? i === 0
+                            ? { rotate: 45, y: 7, width: "18px" }
+                            : i === 1
+                              ? { opacity: 0, scaleX: 0 }
+                              : { rotate: -45, y: -7, width: "18px" }
+                          : {
+                              rotate: 0,
+                              y: 0,
+                              opacity: 1,
+                              width: i === 1 ? "12px" : "18px",
+                            }
+                      }
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 28,
+                      }}
+                    />
+                  ))}
+                </motion.button>
+              </div>
+            </motion.div>
+
+            {/* ── Tablet dropdown (sm – lg only) ───────────────────────── */}
             <AnimatePresence>
               {isMenuOpen && (
                 <motion.div
@@ -73,6 +197,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                     boxShadow: t.menuShadow,
                   }}
                 >
+                  {/* Animated shimmer */}
                   <motion.div
                     className="absolute inset-0 pointer-events-none rounded-2xl"
                     animate={{
@@ -104,6 +229,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                       />
                     ))}
 
+                    {/* Contact button */}
                     <motion.button
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -130,7 +256,49 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
         )}
       </AnimatePresence>
 
-      {/* ══ DESKTOP pill navbar ══ */}
+      {/* ════════════════════════════════════════════════════════════════════
+          MOBILE ONLY  — bottom icon dock (< sm, menu open)
+          ════════════════════════════════════════════════════════════════════ */}
+      <AnimatePresence>
+        {show && isMenuOpen && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 200, damping: 24 }}
+            className="sm:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-4"
+          >
+            <motion.div
+              className="w-full flex items-center justify-around px-4 py-3 rounded-3xl relative overflow-hidden"
+              animate={{ background: t.dockBg }}
+              transition={{ duration: 0.4 }}
+              style={{
+                backdropFilter: "blur(24px)",
+                WebkitBackdropFilter: "blur(24px)",
+                border: `1px solid ${t.dockBorder}`,
+                boxShadow: t.dockShadow,
+              }}
+            >
+              {navItems.map((item) => (
+                <MobileDockItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeItem === item.id}
+                  t={t}
+                  onClick={() => {
+                    setActiveItem(item.id);
+                    setIsMenuOpen(false);
+                  }}
+                />
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ════════════════════════════════════════════════════════════════════
+          DESKTOP  — full pill navbar with macOS dock nav items  (lg+)
+          ════════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {show && (
           <motion.div
@@ -187,7 +355,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                   </a>
                 </div>
 
-                {/* ── Nav items with macOS dock effect ── */}
+                {/* macOS dock nav items */}
                 <div
                   className="flex flex-1 items-center justify-center gap-2 z-10 overflow-visible"
                   onMouseMove={handleNavMouseMove}
@@ -207,7 +375,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                   ))}
                 </div>
 
-                {/* Right: theme toggle + contact */}
+                {/* Theme toggle + Contact */}
                 <div className="flex-1 flex justify-end items-center gap-3 z-10">
                   <ThemeToggle
                     isDark={isDark}
@@ -233,44 +401,6 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                 </div>
               </motion.nav>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ══ MOBILE bottom dock (unchanged) ══ */}
-      <AnimatePresence>
-        {show && isMenuOpen && (
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 100, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 200, damping: 24 }}
-            className="flex sm:!hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-4"
-          >
-            <motion.div
-              className="w-full flex items-center justify-around px-4 py-3 rounded-3xl relative overflow-hidden"
-              animate={{ background: t.dockBg }}
-              transition={{ duration: 0.4 }}
-              style={{
-                backdropFilter: "blur(24px)",
-                WebkitBackdropFilter: "blur(24px)",
-                border: `1px solid ${t.dockBorder}`,
-                boxShadow: t.dockShadow,
-              }}
-            >
-              {navItems.map((item) => (
-                <MobileDockItem
-                  key={item.id}
-                  item={item}
-                  isActive={activeItem === item.id}
-                  t={t}
-                  onClick={() => {
-                    setActiveItem(item.id);
-                    setIsMenuOpen(false);
-                  }}
-                />
-              ))}
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
