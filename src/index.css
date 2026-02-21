@@ -102,57 +102,7 @@ section {
     @apply xl:w-[70%] w-full h-full min-h-[50vh] absolute xl:-top-20 top-24 xl:-right-20 right-0;
   }
 
-  .navbar {
-    @apply fixed w-full left-1/2 py-5 px-5 md:px-20 -translate-x-1/2 z-[100] transition-all duration-300 ease-in-out;
 
-    &.scrolled {
-      @apply top-0 bg-black;
-    }
-
-    &.not-scrolled {
-      @apply md:top-10 top-0 bg-transparent;
-    }
-
-    .inner {
-      @apply mx-auto flex items-center justify-between;
-    }
-
-    .logo {
-      @apply text-white-50 text-xl md:text-2xl font-semibold transition-transform duration-300 hover:scale-105;
-    }
-
-    nav.desktop {
-      @apply hidden lg:flex items-center;
-
-      ul {
-        @apply flex space-x-8;
-
-        li {
-          @apply text-white-50 relative;
-
-          span {
-            @apply transition-colors duration-300 hover:text-white;
-          }
-
-          .underline {
-            @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full;
-          }
-        }
-      }
-    }
-
-    .contact-btn {
-      @apply flex;
-
-      .inner {
-        @apply px-5 py-2 rounded-lg bg-white text-black group-hover:bg-black-50 transition-colors duration-300;
-
-        span {
-          @apply group-hover:text-white transition-colors duration-300;
-        }
-      }
-    }
-  }
 
   .app-showcase {
     @apply w-full mt-20 px-5 md:px-20 py-10 md:py-20 flex items-center justify-center;

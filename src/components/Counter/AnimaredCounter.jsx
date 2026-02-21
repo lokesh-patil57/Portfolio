@@ -4,12 +4,15 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 
 import { counterItems } from "../constants";
+import { T } from "../../constants/theme";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AnimatedCounter = () => {
+const AnimatedCounter = ({ isDark }) => {
   const counterRef = useRef(null);
   const countersRef = useRef([]);
+
+  const t = isDark ? T.dark : T.light;
 
   useGSAP(() => {
     countersRef.current.forEach((counter, index) => {
@@ -44,12 +47,25 @@ const AnimatedCounter = () => {
           <div
             key={index}
             ref={(el) => el && (countersRef.current[index] = el)}
-            className="bg-zinc-900 rounded-lg p-10 flex flex-col justify-center"
+            className="rounded-lg p-10 flex flex-col justify-center transition-colors duration-500"
+            style={{
+              backgroundColor: t.counterBg,
+              border: `1px solid ${t.counterBorder}`,
+              boxShadow: t.counterShadow,
+            }}
           >
-            <div className="counter-number text-white-50 text-5xl font-bold mb-2">
+            <div
+              className="counter-number text-5xl font-bold mb-2 transition-colors duration-500"
+              style={{ color: t.counterTextPrimary }}
+            >
               0 {item.suffix}
             </div>
-            <div className="text-white-50 text-lg">{item.label}</div>
+            <div
+              className="text-lg transition-colors duration-500"
+              style={{ color: t.counterTextSecondary }}
+            >
+              {item.label}
+            </div>
           </div>
         ))}
       </div>
@@ -58,5 +74,3 @@ const AnimatedCounter = () => {
 };
 
 export default AnimatedCounter;
-
-
