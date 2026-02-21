@@ -64,7 +64,7 @@ const Projects = ({ isDark = true }) => {
 
   return (
     <div
-      id="counter"
+      id="projects-section"
       ref={projectRef}
       className="relative w-full h-screen overflow-hidden transition-colors duration-500"
       style={{

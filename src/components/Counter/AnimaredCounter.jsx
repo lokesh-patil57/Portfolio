@@ -29,7 +29,7 @@ const AnimatedCounter = ({ isDark }) => {
         ease: "power2.out",
         snap: { innerText: 1 }, // Ensures whole numbers
         scrollTrigger: {
-          trigger: "#counter",
+          trigger: "#stats-counter",
           start: "top center",
         },
         // Add the suffix after counting is complete
@@ -41,7 +41,11 @@ const AnimatedCounter = ({ isDark }) => {
   }, []);
 
   return (
-    <div id="counter" ref={counterRef} className="padding-x-lg xl:mt-0 mt-32">
+    <div
+      id="stats-counter"
+      ref={counterRef}
+      className="padding-x-lg xl:mt-0 mt-32"
+    >
       <div className="mx-auto grid-4-cols">
         {counterItems.map((item, index) => (
           <div

@@ -8,12 +8,15 @@ const Button = ({ text, className, id }) => {
       onClick={(e) => {
         e.preventDefault();
 
-        const target = document.getElementById("counter");
-
-        if (target && id) {
-          const top = target.getBoundingClientRect().top + window.scrollY;
-
-          window.scrollTo({ top, behavior: "smooth" });
+        if (id) {
+          const target = document.getElementById(id);
+          if (target) {
+            const top =
+              target.getBoundingClientRect().bottom +
+              window.scrollY -
+              window.innerHeight;
+            window.scrollTo({ top, behavior: "smooth" });
+          }
         }
       }}
       className={`${className ?? ""} cta-wrapper `}
