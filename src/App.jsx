@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
-import Projects from "./pages/Projects";
-import AnimatedCounter from "./components/counter/AnimaredCounter";
+import Projects from "./Project/Projects";
+import AnimatedCounter from "./components/Counter/AnimatedCounter";
 import { T } from "./constants/theme";
+import LogoSection from "./components/LogoSection";
 
 function App() {
   const [introFinished, setIntroFinished] = useState(false);
@@ -22,6 +23,7 @@ function App() {
       {/* AnimatedCounter and Projects might need updates too, but starting with Hero as requested */}
       <AnimatedCounter isDark={isDark} />
       <Projects isDark={isDark} />
+      <LogoSection isDark={isDark} />
     </div>
   );
 }
