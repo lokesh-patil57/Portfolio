@@ -59,7 +59,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -80, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
-            className="hidden max-lg:flex fixed top-0 left-0 right-0 z-50 px-4 pt-4 flex-col"
+            className="hidden max-lg:flex fixed top-0 left-0 right-0 z-100 px-4 pt-4 flex-col"
           >
             {/* ── Glassmorphism top bar ─────────────────────────────────── */}
             <motion.div
@@ -100,13 +100,13 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
               {/* Logo */}
               <a
                 href="#hero"
-                className="font-bold text-xl z-10 tracking-tight"
+                className="font-bold text-xl z-100 tracking-tight"
                 style={{ color: t.textPrimary }}
               >
                 Lokesh <span style={{ color: t.logoAccent }}>|</span> Patil
               </a>
 
-              <div className="flex items-center gap-2 z-10">
+              <div className="flex items-center gap-2 z-100">
                 {/* Active-section badge — tablet only (sm+) */}
                 <motion.span
                   key={activeItem}
@@ -266,7 +266,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: "spring", stiffness: 200, damping: 24 }}
-            className="sm:hidden fixed bottom-0 left-0 right-0 z-50 px-4 pb-4"
+            className="sm:hidden fixed bottom-0 left-0 right-0 z-100 px-4 pb-4"
           >
             <motion.div
               className="w-full flex items-center justify-around px-4 py-3 rounded-3xl relative overflow-hidden"
@@ -306,9 +306,9 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="hidden lg:flex fixed top-0 left-0 w-full justify-center pt-6 pointer-events-none z-50"
+            className="hidden lg:flex fixed top-0 left-0 w-full justify-center pt-6 pointer-events-none z-100"
           >
-            <div className="pointer-events-auto relative z-10 w-full flex justify-center">
+            <div className="pointer-events-auto relative z-100 w-full flex justify-center">
               <FloatingOrb
                 delay={0}
                 style={{
@@ -345,7 +345,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                 <LiquidCursor containerRef={desktopNavRef} t={t} />
 
                 {/* Logo */}
-                <div className="flex-1 flex justify-start items-center z-10">
+                <div className="flex-1 flex justify-start items-center z-100">
                   <a
                     href="#hero"
                     className="font-bold text-lg whitespace-nowrap hover:scale-110 transition-all duration-300 ease-out"
@@ -357,7 +357,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
 
                 {/* macOS dock nav items */}
                 <div
-                  className="flex flex-1 items-center justify-center gap-2 z-10 overflow-visible"
+                  className="flex flex-1 items-center justify-center gap-2 z-100 overflow-visible"
                   onMouseMove={handleNavMouseMove}
                   onMouseLeave={handleNavMouseLeave}
                 >
@@ -376,7 +376,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                 </div>
 
                 {/* Theme toggle + Contact */}
-                <div className="flex-1 flex justify-end items-center gap-3 z-10">
+                <div className="flex-1 flex justify-end items-center gap-3 z-100">
                   <ThemeToggle
                     isDark={isDark}
                     onToggle={() => setIsDark((v) => !v)}
