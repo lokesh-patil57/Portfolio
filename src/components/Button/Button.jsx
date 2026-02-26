@@ -1,10 +1,10 @@
 import React from "react";
-
+import { motion } from "framer-motion";
 import arrow from "../../assets/arrow-down.svg";
 
 const Button = ({ text, className, id }) => {
   return (
-    <a
+    <motion.a
       onClick={(e) => {
         e.preventDefault();
 
@@ -20,6 +20,9 @@ const Button = ({ text, className, id }) => {
         }
       }}
       className={`${className ?? ""} cta-wrapper `}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 20 }}
     >
       <div className="cta-button group">
         <div className="bg-circle" />
@@ -28,7 +31,7 @@ const Button = ({ text, className, id }) => {
           <img src={arrow} alt="arrow" />
         </div>
       </div>
-    </a>
+    </motion.a>
   );
 };
 
