@@ -2,12 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./HeroTypingAnimation.css";
-import codeIcon from "../../assets/code.svg";
-import ideasIcon from "../../assets/ideas.svg";
-import conceptsIcon from "../../assets/concepts.svg";
-import designsIcon from "../../assets/designs.svg";
 import Medusae from "../Medusae/Medusae";
 import { T } from "../../constants/theme";
+import ideasIcon from '/images/ideas.svg';
+import conceptsIcon from '/images/concepts.svg';
+import designsIcon from '/images/designs.svg';
+import codeIcon from '/images/code.svg';
 
 const Hero = ({ onComplete, isDark }) => {
   const [isFinished, setIsFinished] = useState(false);
