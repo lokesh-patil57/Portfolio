@@ -5,6 +5,7 @@ import Projects from "./Project/Projects";
 import AnimatedCounter from "./components/Counter/AnimatedCounter";
 import { T } from "./constants/theme";
 import LogoSection from "./components/LogoSection";
+import ExperienceSection from "./ExperienceSection/ExperienceSection";
 
 function App() {
   const [introFinished, setIntroFinished] = useState(false);
@@ -24,6 +25,7 @@ function App() {
       <AnimatedCounter isDark={isDark} />
       <Projects isDark={isDark} />
       <LogoSection isDark={isDark} />
+      <ExperienceSection/>
     </div>
   );
 }
