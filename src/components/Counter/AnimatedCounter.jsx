@@ -2,11 +2,25 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import { motion } from "framer-motion";
 
 import { counterItems } from "../constants";
 import { T } from "../../constants/theme";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      delay: i * 0.12,
+    },
+  }),
+};
 
 const AnimatedCounter = ({ isDark }) => {
   const counterRef = useRef(null);
@@ -41,17 +55,23 @@ const AnimatedCounter = ({ isDark }) => {
   }, []);
 
   return (
-    <div
+    <motion.div
       id="stats-counter"
       ref={counterRef}
       className="padding-x-lg xl:mt-0 mt-32"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
     >
       <div className="mx-auto grid-4-cols">
         {counterItems.map((item, index) => (
-          <div
+          <motion.div
             key={index}
             ref={(el) => el && (countersRef.current[index] = el)}
+            custom={index}
+            variants={cardVariants}
             className="rounded-lg p-10 flex flex-col justify-center transition-colors duration-500"
+            whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
             style={{
               backgroundColor: t.counterBg,
               border: `1px solid ${t.counterBorder}`,
@@ -70,10 +90,10 @@ const AnimatedCounter = ({ isDark }) => {
             >
               {item.label}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
