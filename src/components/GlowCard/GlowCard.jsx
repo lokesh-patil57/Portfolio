@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 
-const GlowCard = ({ card, index, children }) => {
+const GlowCard = ({ card, index, children, isDark = true, t = {} }) => {
   const cardRefs = useRef([]);
   // Throttle mouse move for glow effect
   const throttle = (fn, limit) => {
@@ -28,7 +28,11 @@ const GlowCard = ({ card, index, children }) => {
     <motion.div
       ref={(el) => (cardRefs.current[index] = el)}
       onMouseMove={(e) => handleMouseMove(index, e)}
-      className="card card-border timeline-card rounded-xl p-10 mb-5 break-inside-avoid-column"
+      className="card card-border timeline-card rounded-xl p-10 mb-5 break-inside-avoid-column transition-colors duration-500"
+      style={{
+        backgroundColor: isDark ? "#0e0e10" : "#ffffff",
+        borderColor: t.counterBorder || (isDark ? "#1c1c21" : "rgba(0,0,0,0.1)")
+      }}
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -37,11 +41,19 @@ const GlowCard = ({ card, index, children }) => {
       <div className="glow"></div>
       <div className="flex items-center gap-1 mb-5">
         {Array.from({ length: 5 }, (_, i) => (
-          <img key={i} src="/images/star.png" alt="star" className="size-5" />
+          <img 
+            key={i} 
+            src="/images/star.png" 
+            alt="star" 
+            className="size-5" 
+            style={{
+              filter: isDark ? "none" : "brightness(0.9) saturate(2) hue-rotate(-25deg)"
+            }}
+          />
         ))}
       </div>
       <div className="mb-5">
-        <p className="text-white-50 text-lg">{card.review}</p>
+        <p className="text-lg transition-colors duration-500" style={{ color: isDark ? "#d9ecff" : t.heroSubtitle }}>{card.review}</p>
       </div>
       {children}
     </motion.div>
