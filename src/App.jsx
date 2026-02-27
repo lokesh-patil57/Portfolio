@@ -5,6 +5,7 @@ import Projects from "./Project/Projects";
 import AnimatedCounter from "./components/Counter/AnimatedCounter";
 import { T } from "./constants/theme";
 import LogoSection from "./components/LogoSection";
+import FeatureCards from "./FeatureCards/FeatureCards";
 import ExperienceSection from "./ExperienceSection/ExperienceSection";
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
       <AnimatedCounter isDark={isDark} />
       <Projects isDark={isDark} />
       <LogoSection isDark={isDark} />
-      <ExperienceSection/>
+      <FeatureCards isDark={isDark} t={t} />
+      <ExperienceSection isDark={isDark} t={t} />
     </div>
   );
 }
