@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Projects from "./Project/Projects";
@@ -7,6 +7,10 @@ import { T } from "./constants/theme";
 import LogoSection from "./components/LogoSection";
 import FeatureCards from "./FeatureCards/FeatureCards";
 import ExperienceSection from "./ExperienceSection/ExperienceSection";
+import TechStack from "./TechStack/TechStack";
+import Socials from "./Socials/Socials";
+import Contact from "./Contact/Contact";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const [introFinished, setIntroFinished] = useState(false);
@@ -14,6 +18,13 @@ function App() {
 
   // Get current theme tokens
   const t = isDark ? T.dark : T.light;
+
+  // Update body background color when theme changes
+  useEffect(() => {
+    document.body.style.backgroundColor = t.background;
+    document.body.style.color = t.heroText;
+    document.body.style.transition = "background-color 0.5s, color 0.5s";
+  }, [isDark, t]);
 
   return (
     <div
@@ -28,6 +39,10 @@ function App() {
       <LogoSection isDark={isDark} />
       <FeatureCards isDark={isDark} t={t} />
       <ExperienceSection isDark={isDark} t={t} />
+      <TechStack isDark={isDark} t={t} />
+      <Socials isDark={isDark} t={t} />
+      <Contact isDark={isDark} t={t} />
+      <Footer isDark={isDark} t={t} />
     </div>
   );
 }
