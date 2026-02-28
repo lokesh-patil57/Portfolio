@@ -252,14 +252,14 @@ const socialImgs = [
     imgPath: "/images/fb.png",
   },
   {
-    name: "x",
-    url : "https://x.com/Luckypatil_57",
-    imgPath: "/images/x.png",
-  },
-  {
     name: "linkedin",
     url : "https://www.linkedin.com/in/lokesh-patil-91a64a320",
     imgPath: "/images/linkedin.png",
+  },
+  {
+    name: "github",
+    url : "https://github.com/lokesh-patil57",
+    imgPath: "/images/github.png",
   },
 ];
 
