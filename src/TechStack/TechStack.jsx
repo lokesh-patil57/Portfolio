@@ -28,6 +28,7 @@ const TechStack = ({ isDark = true, t = {} }) => {
         scrollTrigger: {
           trigger: "#skills", // Trigger the animation when the user scrolls to the #skills wrapper
           start: "top center", // Start the animation when the top of the wrapper is at the center of the screen
+          toggleActions: "play reverse play reverse", // Enable reverse animation when scrolling back
         },
       }
     );

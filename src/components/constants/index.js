@@ -110,34 +110,40 @@ const techStackImgs = [
 
 const techStackIcons = [
   {
-    name: "React Developer",
+    name: "React.js",
     modelPath: "/models/react_logo-transformed.glb",
     scale: 1,
     rotation: [0, 0, 0],
   },
   {
-    name: "Python Developer",
+    name: "Python",
     modelPath: "/models/python-transformed.glb",
     scale: 0.8,
     rotation: [0, 0, 0],
   },
   {
-    name: "Backend Developer",
+    name: "Node.js",
     modelPath: "/models/node-transformed.glb",
     scale: 5,
     rotation: [0, -Math.PI / 2, 0],
   },
   {
-    name: "Interactive Developer",
+    name: "Three.js",
     modelPath: "/models/three.js-transformed.glb",
     scale: 0.05,
     rotation: [0, 0, 0],
   },
   {
-    name: "Project Manager",
+    name: "Git",
     modelPath: "/models/git-svg-transformed.glb",
     scale: 0.05,
     rotation: [0, -Math.PI / 4, 0],
+  },
+  {
+    name: "Figma",
+    modelPath: "/models/figma-transformed.glb",
+    scale: 1.2,
+    rotation: [Math.PI / 2, 0, 0],
   },
 ];
 
@@ -243,22 +249,22 @@ const socials = [
 const socialImgs = [
   {
     name: "insta",
-    url : "https://www.instagram.com/lucky_patil.57",
+    url: "https://www.instagram.com/lucky_patil.57",
     imgPath: "/images/insta.png",
   },
   {
     name: "fb",
-    url : "https://www.facebook.com/lokeshjagdish.patil",
+    url: "https://www.facebook.com/lokeshjagdish.patil",
     imgPath: "/images/fb.png",
   },
   {
     name: "linkedin",
-    url : "https://www.linkedin.com/in/lokesh-patil-91a64a320",
+    url: "https://www.linkedin.com/in/lokesh-patil-91a64a320",
     imgPath: "/images/linkedin.png",
   },
   {
     name: "github",
-    url : "https://github.com/lokesh-patil57",
+    url: "https://github.com/lokesh-patil57",
     imgPath: "/images/github.png",
   },
 ];
