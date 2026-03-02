@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import { T } from "../../constants/theme";
 
 // ─── Sub-components ───────────────────────────────────────────────────────────
@@ -13,6 +14,7 @@ import navItems from "./navItems";
 
 // ─── Main Navbar ──────────────────────────────────────────────────────────────
 const Navbar = ({ show = true, isDark, setIsDark }) => {
+  const location = useLocation();
   const [activeItem, setActiveItem] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -24,6 +26,17 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
 
   // Resolve theme tokens
   const t = isDark ? T.dark : T.light;
+
+  // ── Sync active item with route ───────────────────────────────────────────
+  useEffect(() => {
+    if (location.pathname === "/resume") {
+      setActiveItem("resume");
+    } else if (location.pathname === "/") {
+      // Default to home or check hash if needed, but for now just "home"
+      // You could also add logic here to check hashes like #projects
+      if (!location.hash) setActiveItem("home");
+    }
+  }, [location]);
 
   // ── Close mobile menu when clicking outside ───────────────────────────────
   useEffect(() => {
@@ -98,13 +111,14 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
               />
 
               {/* Logo */}
-              <a
-                href="#hero"
-                className="font-bold text-xl z-100 tracking-tight"
+              <Link
+                to="/"
+                onClick={() => setActiveItem("home")}
+                className="font-bold text-xl z-100 tracking-tight no-underline"
                 style={{ color: t.textPrimary }}
               >
                 Lokesh <span style={{ color: t.logoAccent }}>|</span> Patil
-              </a>
+              </Link>
 
               <div className="flex items-center gap-2 z-100">
                 {/* Active-section badge — tablet only (sm+) */}
@@ -123,7 +137,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                     className="w-1.5 h-1.5 rounded-full inline-block"
                     style={{ background: t.textActive }}
                   />
-                  {navItems.find((n) => n.id === activeItem)?.label}
+                  {navItems.find((n) => n.id === activeItem)?.label || "Home"}
                 </motion.span>
 
                 {/* Theme toggle */}
@@ -163,11 +177,11 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                               ? { opacity: 0, scaleX: 0 }
                               : { rotate: -45, y: -7, width: "18px" }
                           : {
-                              rotate: 0,
-                              y: 0,
-                              opacity: 1,
-                              width: i === 1 ? "12px" : "18px",
-                            }
+                            rotate: 0,
+                            y: 0,
+                            opacity: 1,
+                            width: i === 1 ? "12px" : "18px",
+                          }
                       }
                       transition={{
                         type: "spring",
@@ -230,24 +244,26 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                     ))}
 
                     {/* Contact button */}
-                    <motion.button
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.35 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="mt-2 w-full py-3.5 rounded-2xl font-bold text-sm tracking-wide"
-                      style={{
-                        background: isDark
-                          ? "linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)"
-                          : "linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%)",
-                        color: isDark ? "#0c4a6e" : "#ffffff",
-                        boxShadow: isDark
-                          ? "0 4px 20px rgba(56,189,248,0.25)"
-                          : "0 4px 20px rgba(2,132,199,0.30)",
-                      }}
-                    >
-                      Contact me
-                    </motion.button>
+                    <a href="/#contact" className="no-underline">
+                      <motion.button
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="mt-2 w-full py-3.5 rounded-2xl font-bold text-sm tracking-wide"
+                        style={{
+                          background: isDark
+                            ? "linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%)"
+                            : "linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%)",
+                          color: isDark ? "#0c4a6e" : "#ffffff",
+                          boxShadow: isDark
+                            ? "0 4px 20px rgba(56,189,248,0.25)"
+                            : "0 4px 20px rgba(2,132,199,0.30)",
+                        }}
+                      >
+                        Contact me
+                      </motion.button>
+                    </a>
                   </div>
                 </motion.div>
               )}
@@ -346,13 +362,14 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
 
                 {/* Logo */}
                 <div className="flex-1 flex justify-start items-center z-100">
-                  <a
-                    href="#hero"
-                    className="font-bold text-lg whitespace-nowrap hover:scale-110 transition-all duration-300 ease-out"
+                  <Link
+                    to="/"
+                    onClick={() => setActiveItem("home")}
+                    className="font-bold text-lg whitespace-nowrap hover:scale-110 transition-all duration-300 ease-out no-underline"
                     style={{ color: t.textPrimary }}
                   >
                     Lokesh <span style={{ color: t.logoAccent }}>|</span> Patil
-                  </a>
+                  </Link>
                 </div>
 
                 {/* macOS dock nav items */}
@@ -382,22 +399,24 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                     onToggle={() => setIsDark((v) => !v)}
                     t={t}
                   />
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.96 }}
-                    className="flex items-center justify-center rounded-xl px-3.5 py-2 font-medium whitespace-nowrap transition-colors duration-300"
-                    style={{ background: t.contactBg, color: t.contactText }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = t.contactHoverBg;
-                      e.currentTarget.style.color = t.contactHoverText;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = t.contactBg;
-                      e.currentTarget.style.color = t.contactText;
-                    }}
-                  >
-                    Contact me
-                  </motion.button>
+                  <a href="/#contact" className="no-underline">
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.96 }}
+                      className="flex items-center justify-center rounded-xl px-3.5 py-2 font-medium whitespace-nowrap transition-colors duration-300"
+                      style={{ background: t.contactBg, color: t.contactText }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = t.contactHoverBg;
+                        e.currentTarget.style.color = t.contactHoverText;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = t.contactBg;
+                        e.currentTarget.style.color = t.contactText;
+                      }}
+                    >
+                      Contact me
+                    </motion.button>
+                  </a>
                 </div>
               </motion.nav>
             </div>

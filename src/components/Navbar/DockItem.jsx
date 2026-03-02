@@ -1,5 +1,6 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
 
 // ─── Spring configs ───────────────────────────────────────────────────────────
 const SCALE_SPRING = { stiffness: 380, damping: 22, mass: 0.6 };
@@ -16,18 +17,10 @@ const MAX_LIFT_COMPACT = -10; // px for compact mode
 const MAX_MAGNET = 9; // px
 const MAX_MAGNET_COMPACT = 5; // px for compact mode
 
+const MotionLink = motion(Link);
+
 /**
  * DockItem — a single animated macOS-dock-style button.
- *
- * Props
- * ─────
- *   item        { id, label, icon, href }
- *   isActive    boolean
- *   t           theme-token object
- *   onClick     () => void
- *   cursor      { x, y }  — shared cursor coordinates from parent dock
- *   dockRef     ref to the dock container (unused here, kept for API compat)
- *   index       number
  */
 const DockItem = ({
   item,
@@ -153,13 +146,12 @@ const DockItem = ({
       />
 
       {/* ── Main button ────────────────────────────────────────────────────── */}
-      <motion.a
-        href={item.href}
+      <MotionLink
+        to={item.href}
         onClick={handleClick}
         aria-label={item.label}
-        className={`relative flex items-center justify-center cursor-pointer overflow-hidden select-none ${
-          compact ? "w-9 h-9 rounded-xl" : "w-14 h-11 rounded-2xl"
-        }`}
+        className={`relative flex items-center justify-center cursor-pointer overflow-hidden select-none ${compact ? "w-9 h-9 rounded-xl" : "w-14 h-11 rounded-2xl"
+          }`}
         style={{
           scale,
           rotateX: tiltX,
@@ -240,13 +232,12 @@ const DockItem = ({
         <span className="relative z-10 flex items-center justify-center">
           {item.icon}
         </span>
-      </motion.a>
+      </MotionLink>
 
       {/* ── Tooltip ────────────────────────────────────────────────────────── */}
       <motion.div
-        className={`absolute left-1/2 pointer-events-none whitespace-nowrap z-50 ${
-          tooltipBelow ? "-bottom-11" : "-top-11"
-        }`}
+        className={`absolute left-1/2 pointer-events-none whitespace-nowrap z-50 ${tooltipBelow ? "-bottom-11" : "-top-11"
+          }`}
         style={{ x: "-50%" }}
         initial={false}
         animate={

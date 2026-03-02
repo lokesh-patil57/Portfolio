@@ -1,11 +1,15 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-// MobileDockItem — icon-only dock button with liquid flow effect when active
-// Props: item ({ id, label, icon, href }), isActive (bool), t (theme tokens), onClick (fn)
+const MotionLink = motion(Link);
+
+/**
+ * MobileDockItem — icon-only dock button with liquid flow effect when active.
+ */
 const MobileDockItem = ({ item, isActive, t, onClick }) => {
   return (
-    <motion.a
-      href={item.href}
+    <MotionLink
+      to={item.href}
       onClick={onClick}
       whileTap={{ scale: 0.82 }}
       animate={isActive ? { y: [0, -6, 0] } : { y: 0 }}
@@ -14,12 +18,11 @@ const MobileDockItem = ({ item, isActive, t, onClick }) => {
           ? { duration: 1.2, repeat: Infinity, ease: "easeInOut" }
           : { duration: 0.3 }
       }
-      className="relative flex items-center justify-center w-12 h-12 rounded-2xl cursor-pointer overflow-hidden"
+      className="relative flex items-center justify-center w-12 h-12 rounded-2xl cursor-pointer overflow-hidden no-underline"
       style={{
         background: isActive ? "transparent" : t.dockItemInactiveBg,
         border: `1px solid ${isActive ? t.dockItemActiveBorder : t.dockItemInactiveBorder}`,
         color: isActive ? t.textActive : t.textSecondary,
-        textDecoration: "none",
       }}
     >
       {/* ── Liquid flow background (active only) ── */}
@@ -69,7 +72,7 @@ const MobileDockItem = ({ item, isActive, t, onClick }) => {
       <span className="relative z-10 flex items-center justify-center">
         {item.icon}
       </span>
-    </motion.a>
+    </MotionLink>
   );
 };
 

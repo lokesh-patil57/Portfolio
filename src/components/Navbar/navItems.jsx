@@ -3,7 +3,7 @@ const navItems = [
   {
     id: "home",
     label: "Home",
-    href: "#hero",
+    href: "/#hero",
     icon: (
       <svg
         width="18"
@@ -23,7 +23,7 @@ const navItems = [
   {
     id: "about",
     label: "About",
-    href: "#about",
+    href: "/#about",
     icon: (
       <svg
         width="18"
@@ -43,7 +43,7 @@ const navItems = [
   {
     id: "projects",
     label: "Projects",
-    href: "#projects",
+    href: "/#projects",
     icon: (
       <svg
         width="18"
@@ -63,7 +63,7 @@ const navItems = [
   {
     id: "skills",
     label: "Skills",
-    href: "#skills",
+    href: "/#skills",
     icon: (
       <svg
         width="18"
@@ -83,7 +83,7 @@ const navItems = [
   {
     id: "contact",
     label: "Contact",
-    href: "#contact",
+    href: "/#contact",
     icon: (
       <svg
         width="18"
@@ -97,6 +97,28 @@ const navItems = [
       >
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
         <polyline points="22,6 12,13 2,6" />
+      </svg>
+    ),
+  },
+  {
+    id: "resume",
+    label: "Resume",
+    href: "/resume",
+    icon: (
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="12" y1="18" x2="12" y2="12" />
+        <polyline points="9 15 12 18 15 15" />
       </svg>
     ),
   },
