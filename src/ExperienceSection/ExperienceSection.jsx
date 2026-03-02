@@ -87,7 +87,7 @@ const Experience = ({ isDark = true, t = {} }) => {
                   initial="hidden"
                   whileInView="visible"
                   variants={cardVariants}
-                  viewport={{ once: true, amount: 0.2 }}
+                  viewport={{ once: false, amount: 0.2 }}
                 >
                   <GlowCard card={card} index={index} isDark={isDark} t={t}>
                     <div>
@@ -118,7 +118,7 @@ const Experience = ({ isDark = true, t = {} }) => {
                       initial="hidden"
                       whileInView="visible"
                       variants={textVariants}
-                      viewport={{ once: true, amount: 0.2 }}
+                      viewport={{ once: false, amount: 0.2 }}
                     >
                       <div className="timeline-logo" style={{ 
                         backgroundColor: isDark ? "#0e0e10" : "#f0f4f8", 
@@ -146,7 +146,7 @@ const Experience = ({ isDark = true, t = {} }) => {
                                   duration: 0.4,
                                   delay: rIndex * 0.07 + 0.3,
                                 }}
-                                viewport={{ once: true }}
+                                viewport={{ once: false }}
                               >
                                 {responsibility}
                               </motion.li>

@@ -1,4 +1,4 @@
-import { Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
+import { Center, Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useEffect } from "react";
 import * as THREE from "three";
@@ -31,7 +31,9 @@ const TechIconCardExperience = ({ model, isDark = true }) => {
       <Environment preset={isDark ? "city" : "sunset"} />
       <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
         <group scale={model.scale} rotation={model.rotation}>
-          <primitive object={scene.scene} />
+          <Center>
+            <primitive object={scene.scene} />
+          </Center>
         </group>
       </Float>
 

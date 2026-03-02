@@ -18,7 +18,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6 }}
           className="flex justify-center mb-8"
         >
@@ -33,7 +33,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false, rootMargin: "-80px 0px 0px 0px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-14 transition-colors duration-500`} style={{ color: t.textPrimary }}
         >
@@ -48,7 +48,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 whileHover={{ y: -10 }}
                 onMouseMove={(e) => {
@@ -62,8 +62,8 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                     `${e.clientY - rect.top}px`
                   );
                 }}
-                className={`group relative rounded-3xl p-10 transition-all duration-300`} 
-                style={{ 
+                className={`group relative rounded-3xl p-10 transition-all duration-300`}
+                style={{
                   backgroundColor: isDark ? "#0e0e10" : t.counterBg,
                   borderColor: t.counterBorder,
                   borderWidth: "1px",
@@ -82,7 +82,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                 <div
                   className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{
-                    background: isDark 
+                    background: isDark
                       ? `radial-gradient(250px circle at var(--x) var(--y), rgba(255,255,255,0.18), transparent 70%)`
                       : `radial-gradient(250px circle at var(--x) var(--y), rgba(2,132,199,0.15), transparent 70%)`
                   }}

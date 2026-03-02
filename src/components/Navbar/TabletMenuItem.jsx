@@ -1,23 +1,25 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-// TabletMenuItem — a single full-width row item for the tablet dropdown menu
-// Props: item ({ id, label, icon, href }), isActive (bool), index (number),
-//        t (theme tokens), onClick (fn)
+const MotionLink = motion(Link);
+
+/**
+ * TabletMenuItem — a single full-width row item for the tablet dropdown menu.
+ */
 const TabletMenuItem = ({ item, isActive, index, t, onClick }) => {
   return (
-    <motion.a
-      href={item.href}
+    <MotionLink
+      to={item.href}
       onClick={onClick}
       initial={{ opacity: 0, x: -16 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.05, duration: 0.25, ease: "easeOut" }}
       whileTap={{ scale: 0.97 }}
-      className="flex items-center gap-3 w-full px-4 py-3 rounded-xl cursor-pointer"
+      className="flex items-center gap-3 w-full px-4 py-3 rounded-xl cursor-pointer no-underline"
       style={{
         background: isActive ? t.activeItemBg : t.itemBg,
         border: `1px solid ${isActive ? t.activeItemBorder : t.itemBorder}`,
         color: isActive ? t.textActive : t.textPrimary,
-        textDecoration: "none",
         boxShadow: isActive ? t.activeItemShadow : "none",
       }}
     >
@@ -58,7 +60,7 @@ const TabletMenuItem = ({ item, isActive, index, t, onClick }) => {
           </svg>
         </motion.span>
       )}
-    </motion.a>
+    </MotionLink>
   );
 };
 

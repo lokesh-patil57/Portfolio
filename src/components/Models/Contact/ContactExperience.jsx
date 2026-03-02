@@ -27,7 +27,7 @@ const ContactExperience = () => {
           rotation={[-Math.PI / 2, 0, 0]}
         >
           <planeGeometry args={[30, 30]} />
-          <meshStandardMaterial color="#a46b2d" />
+          <meshStandardMaterial color="#ffffff" />
         </mesh>
       </group>
 
