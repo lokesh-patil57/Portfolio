@@ -7,8 +7,8 @@ const Contact = ({ isDark = true, t = {} }) => {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    from_name: "",
+    from_email: "",
     message: "",
   });
 
@@ -26,9 +26,9 @@ const Contact = ({ isDark = true, t = {} }) => {
         import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
         formRef.current,
-        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
+        import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY,
       );
-
+      alert("Message sent successfully 🚀");
       // Reset form and stop loading
       setForm({ name: "", email: "", message: "" });
     } catch (error) {
@@ -39,7 +39,11 @@ const Contact = ({ isDark = true, t = {} }) => {
   };
 
   return (
-    <section id="contact" className="flex-center section-padding transition-colors duration-500" style={{ backgroundColor: t.background || "#000000" }}>
+    <section
+      id="contact"
+      className="flex-center section-padding transition-colors duration-500"
+      style={{ backgroundColor: t.background || "#000000" }}
+    >
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
           title="Get in Touch – Let's Connect"
@@ -49,42 +53,63 @@ const Contact = ({ isDark = true, t = {} }) => {
         />
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
-            <div className="flex-center card-border rounded-xl p-10 transition-colors duration-500" style={{ backgroundColor: isDark ? "#0e0e10" : "#ffffff", borderColor: t.counterBorder || (isDark ? "#1c1c21" : "rgba(0,0,0,0.1)") }}>
+            <div
+              className="flex-center card-border rounded-xl p-10 transition-colors duration-500"
+              style={{
+                backgroundColor: isDark ? "#0e0e10" : "#ffffff",
+                borderColor:
+                  t.counterBorder || (isDark ? "#1c1c21" : "rgba(0,0,0,0.1)"),
+              }}
+            >
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
                 className="w-full flex flex-col gap-7"
               >
                 <div>
-                  <label htmlFor="name" style={{ color: "#000000" }}>Your name</label>
+                  <label htmlFor="name" style={{ color: "#000000" }}>
+                    Your name
+                  </label>
                   <input
                     type="text"
                     id="name"
-                    name="name"
+                    name="from_name"
                     value={form.name}
                     onChange={handleChange}
                     placeholder="What's your good name?"
                     required
-                    style={{ backgroundColor: isDark ? "#2d2d38" : "#f0f4f8", color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"), borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)" }}
+                    style={{
+                      backgroundColor: isDark ? "#2d2d38" : "#f0f4f8",
+                      color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"),
+                      borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)",
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" style={{ color: "#000000" }}>Your Email</label>
+                  <label htmlFor="email" style={{ color: "#000000" }}>
+                    Your Email
+                  </label>
                   <input
                     type="email"
                     id="email"
-                    name="email"
+                    name="from_email"
                     value={form.email}
                     onChange={handleChange}
                     placeholder="What's your email address?"
                     required
-                    style={{ backgroundColor: isDark ? "#2d2d38" : "#f0f4f8", color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"), borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)" }}
+                    style={{
+                      backgroundColor: isDark ? "#2d2d38" : "#f0f4f8",
+                      color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"),
+                      borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)",
+                    }}
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message" style={{ color: "#000000" }}>Your Message</label>
+                  <label htmlFor="message" style={{ color: "#000000" }}>
+                    Your Message
+                  </label>
                   <textarea
                     id="message"
                     name="message"
@@ -93,7 +118,11 @@ const Contact = ({ isDark = true, t = {} }) => {
                     placeholder="How can I help you?"
                     rows="5"
                     required
-                    style={{ backgroundColor: isDark ? "#2d2d38" : "#f0f4f8", color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"), borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)" }}
+                    style={{
+                      backgroundColor: isDark ? "#2d2d38" : "#f0f4f8",
+                      color: t.textPrimary || (isDark ? "#ffffff" : "#0f172a"),
+                      borderColor: isDark ? "#1c1c21" : "rgba(0,0,0,0.1)",
+                    }}
                   />
                 </div>
 
