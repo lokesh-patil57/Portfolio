@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -36,31 +35,23 @@ const textVariants = {
 };
 
 const Experience = ({ isDark = true, t = {} }) => {
-  // ── Restore GSAP only for the timeline mask-wipe ──────────────────────────
+  // Lightweight ScrollTrigger: single instance, direct transform update.
   useGSAP(() => {
-    const throttle = (fn, limit) => {
-      let lastCall = 0;
-      return (...args) => {
-        const now = Date.now();
-        if (now - lastCall >= limit) {
-          lastCall = now;
-          fn(...args);
-        }
-      };
-    };
+    const timelineEl = document.querySelector(".timeline");
+    if (!timelineEl) return;
 
-    gsap.to(".timeline", {
-      transformOrigin: "bottom bottom",
-      ease: "power1.inOut",
-      scrollTrigger: {
-        trigger: ".timeline",
-        start: "top center",
-        end: "70% center",
-        onUpdate: throttle((self) => {
-          gsap.to(".timeline", { scaleY: 1 - self.progress });
-        }, 100),
+    const st = ScrollTrigger.create({
+      trigger: timelineEl,
+      start: "top center",
+      end: "70% center",
+      onUpdate: (self) => {
+        gsap.set(timelineEl, { scaleY: 1 - self.progress });
       },
     });
+
+    return () => {
+      st.kill();
+    };
   }, []);
 
   return (
@@ -87,11 +78,19 @@ const Experience = ({ isDark = true, t = {} }) => {
                   initial="hidden"
                   whileInView="visible"
                   variants={cardVariants}
-                  viewport={{ once: false, amount: 0.2 }}
+                  viewport={{ once: true, amount: 0.2 }}
                 >
                   <GlowCard card={card} index={index} isDark={isDark} t={t}>
                     <div>
-                      <img src={card.imgPath} alt={card.title} />
+                      <img
+                        src={card.imgPath}
+                        alt={card.title}
+                        loading="lazy"
+                        decoding="async"
+                        width={640}
+                        height={360}
+                        className="mt-6 w-full max-w-[260px] md:max-w-[180px] mx-auto object-contain"
+                      />
                     </div>
                   </GlowCard>
                 </motion.div>
@@ -118,13 +117,24 @@ const Experience = ({ isDark = true, t = {} }) => {
                       initial="hidden"
                       whileInView="visible"
                       variants={textVariants}
-                      viewport={{ once: false, amount: 0.2 }}
+                      viewport={{ once: true, amount: 0.2 }}
                     >
-                      <div className="timeline-logo" style={{ 
-                        backgroundColor: isDark ? "#0e0e10" : "#f0f4f8", 
-                        borderColor: isDark ? "#1c1c21" : "#e2e8f0"
-                      }}>
-                        <img src={card.logoPath} alt="logo" />
+                      <div
+                        className="timeline-logo"
+                        style={{
+                          backgroundColor: isDark ? "#0e0e10" : "#f0f4f8",
+                          borderColor: isDark ? "#1c1c21" : "#e2e8f0",
+                        }}
+                      >
+                        <img
+                          src={card.logoPath}
+                          alt="logo"
+                          loading="lazy"
+                          decoding="async"
+                          width={56}
+                          height={56}
+                          className="w-8 h-8 md:w-10 md:h-10 object-contain"
+                        />
                       </div>
                       <div>
                         <h1 className="font-semibold text-3xl transition-colors duration-500" style={{ color: t.textPrimary }}>{card.title}</h1>
@@ -135,23 +145,21 @@ const Experience = ({ isDark = true, t = {} }) => {
                           Responsibilities
                         </p>
                         <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 transition-colors duration-500" style={{ color: isDark ? "#d9ecff" : t.heroSubtitle }}>
-                          {card.responsibilities.map(
-                            (responsibility, rIndex) => (
-                              <motion.li
-                                key={rIndex}
-                                className="text-lg"
-                                initial={{ opacity: 0, x: -10 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  duration: 0.4,
-                                  delay: rIndex * 0.07 + 0.3,
-                                }}
-                                viewport={{ once: false }}
-                              >
-                                {responsibility}
-                              </motion.li>
-                            )
-                          )}
+                          {card.responsibilities.map((responsibility, rIndex) => (
+                            <motion.li
+                              key={rIndex}
+                              className="text-lg"
+                              initial={{ opacity: 0, x: -10 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{
+                                duration: 0.4,
+                                delay: rIndex * 0.07 + 0.3,
+                              }}
+                              viewport={{ once: true }}
+                            >
+                              {responsibility}
+                            </motion.li>
+                          ))}
                         </ul>
                       </div>
                     </motion.div>

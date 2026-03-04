@@ -7,13 +7,13 @@ const TitleHeader = React.memo(({ title, sub, isDark = true, t = {} }) => {
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      viewport={{ once: false, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.3 }}
     >
       {/* Section Badge */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6 }}
         className="flex justify-center"
       >
@@ -28,7 +28,7 @@ const TitleHeader = React.memo(({ title, sub, isDark = true, t = {} }) => {
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false }}
+        viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1 }}
         className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center transition-colors duration-500`} style={{ color: t.textPrimary }}
       >

@@ -36,7 +36,7 @@ const GlowCard = ({ card, index, children, isDark = true, t = {} }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      viewport={{ once: false, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       <div className="glow"></div>
       <div className="flex items-center gap-1 mb-5">
@@ -46,6 +46,10 @@ const GlowCard = ({ card, index, children, isDark = true, t = {} }) => {
             src="/images/star.png"
             alt="star"
             className="size-5"
+            loading="lazy"
+            decoding="async"
+            width={20}
+            height={20}
             style={{
               filter: isDark ? "none" : "brightness(0.9) saturate(2) hue-rotate(-25deg)"
             }}
