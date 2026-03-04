@@ -18,7 +18,15 @@ const Socials = ({ isDark = true, t = {} }) => {
             <GlowCard card={testimonial} key={index} index={index} isDark={isDark} t={t}>
               <div className="flex items-center gap-3">
                 <div>
-                  <img src={testimonial.imgPath} alt="" />
+                  <img
+                    src={testimonial.imgPath}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
                 </div>
                 <div>
                   <p className="font-bold">{testimonial.name}</p>

@@ -1,10 +1,13 @@
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import { abilities } from "../components/constants/index.js";
-import { CheckCircle2, Sparkles } from "lucide-react";
 
 const formats = abilities;
 
 export default function ExportFormats({ isDark = true, t = {} }) {
+  const rectRef = useRef(null);
+  const rafRef = useRef(0);
+
   return (
     <section className={`relative py-24 md:py-16 overflow-hidden transition-colors duration-500`} style={{ backgroundColor: t.background }}>
       {/* Background decoration */}
@@ -18,7 +21,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="flex justify-center mb-8"
         >
@@ -33,7 +36,7 @@ export default function ExportFormats({ isDark = true, t = {} }) {
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, rootMargin: "-80px 0px 0px 0px" }}
+          viewport={{ once: true, rootMargin: "-80px 0px 0px 0px" }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className={`text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-14 transition-colors duration-500`} style={{ color: t.textPrimary }}
         >
@@ -48,19 +51,25 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.15 }}
                 whileHover={{ y: -10 }}
                 onMouseMove={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  e.currentTarget.style.setProperty(
-                    "--x",
-                    `${e.clientX - rect.left}px`
-                  );
-                  e.currentTarget.style.setProperty(
-                    "--y",
-                    `${e.clientY - rect.top}px`
-                  );
+                  if (!rectRef.current) return;
+                  if (rafRef.current) cancelAnimationFrame(rafRef.current);
+                  const { left, top } = rectRef.current;
+                  const x = e.clientX - left;
+                  const y = e.clientY - top;
+                  rafRef.current = requestAnimationFrame(() => {
+                    e.currentTarget.style.setProperty("--x", `${x}px`);
+                    e.currentTarget.style.setProperty("--y", `${y}px`);
+                    rafRef.current = 0;
+                  });
+                }}
+                onMouseEnter={(e) => {
+                  rectRef.current = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.transform = "scale(1.02)";
+                  e.currentTarget.style.borderColor = isDark ? "rgba(59,130,246,0.6)" : "rgba(2,132,199,0.6)";
                 }}
                 className={`group relative rounded-3xl p-10 transition-all duration-300`}
                 style={{
@@ -69,13 +78,10 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                   borderWidth: "1px",
                   boxShadow: t.counterShadow
                 }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.02)";
-                  e.currentTarget.style.borderColor = isDark ? "rgba(59,130,246,0.6)" : "rgba(2,132,199,0.6)";
-                }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "scale(1)";
                   e.currentTarget.style.borderColor = t.counterBorder;
+                  rectRef.current = null;
                 }}
               >
                 {/* Cursor-follow glow */}
@@ -96,6 +102,10 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                       src={format.imgPath}
                       alt={format.title}
                       className="w-10 h-10 object-contain"
+                      loading="lazy"
+                      decoding="async"
+                      width={40}
+                      height={40}
                     />
                   </div>
 

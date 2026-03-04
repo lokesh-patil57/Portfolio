@@ -133,7 +133,14 @@ const Contact = ({ isDark = true, t = {} }) => {
                       {loading ? "Sending..." : "Send Message"}
                     </p>
                     <div className="arrow-wrapper">
-                      <img src="/images/arrow-down.svg" alt="arrow" />
+                      <img
+                        src="/images/arrow-down.svg"
+                        alt="arrow"
+                        loading="lazy"
+                        decoding="async"
+                        width={20}
+                        height={20}
+                      />
                     </div>
                   </div>
                 </button>

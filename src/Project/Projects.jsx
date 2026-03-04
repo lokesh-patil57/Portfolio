@@ -1,31 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Projects.css";
 
-import img1 from "../assets/img1.jpeg";
-import img2 from "../assets/img2.jpeg";
-import img3 from "../assets/img3.jpeg";
-import img4 from "../assets/img4.jpeg";
-import img5 from "../assets/img5.jpeg";
-import img6 from "../assets/img6.png";
-import img7 from "../assets/img7.jpeg";
-import img8 from "../assets/img8.jpeg";
-import img9 from "../assets/img9.jpeg";
-import img10 from "../assets/img10.jpeg";
-import ModelBg from "../assets/2.png";
-
 // ─── Image carousel data ──────────────────────────────────────────────────────
 const projectImages = [
-  img1,
-  img2,
-  img3,
-  img4,
-  img5,
-  img6,
-  img7,
-  img8,
-  img9,
-  img10,
+  "/images/project1.avif",
+  "/images/project2.avif",
+  "/images/project3.avif",
+  "/images/project4.avif",
+  "/images/project5.avif",
+  "/images/project6.avif",
+  "/images/project7.avif",
+  "/images/project8.avif",
+  "/images/project9.avif",
+  "/images/project10.avif",
 ];
+
+const modelBgImage = "/images/2.avif";
 
 // ─── Projects Section ─────────────────────────────────────────────────────────
 const Projects = ({ isDark = true }) => {
@@ -110,6 +100,10 @@ const Projects = ({ isDark = true }) => {
                 src={img}
                 alt={`project-${index + 1}`}
                 className="w-full h-full object-cover rounded-lg shadow-lg"
+                loading="lazy"
+                decoding="async"
+                width={640}
+                height={640}
               />
             </div>
           ))}
@@ -141,7 +135,7 @@ const Projects = ({ isDark = true }) => {
               fadeSlide("400ms").className
             }`}
             style={{
-              backgroundImage: `url('${ModelBg}')`,
+              backgroundImage: `url('${modelBgImage}')`,
               backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
