@@ -1,13 +1,14 @@
+import React, { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
 import Button from "../Button/Button";
 import "./HeroTypingAnimation.css";
-import Medusae from "../Medusae/Medusae";
 import { T } from "../../constants/theme";
 import ideasIcon from '/images/ideas.svg';
 import conceptsIcon from '/images/concepts.svg';
 import designsIcon from '/images/designs.svg';
 import codeIcon from '/images/code.svg';
+
+const Medusae = React.lazy(() => import("../Medusae/Medusae"));
 
 const Hero = ({ onComplete, isDark }) => {
   const [isFinished, setIsFinished] = useState(false);
@@ -81,6 +82,7 @@ const Hero = ({ onComplete, isDark }) => {
 
   return (
     <section
+      id="hero"
       className="h-screen w-full flex flex-col items-center justify-center relative overflow-hidden z-40 transition-colors duration-500"
       style={{ backgroundColor: t.background }}
     >
@@ -178,17 +180,19 @@ const Hero = ({ onComplete, isDark }) => {
       {/* Interactive Particle Background - Visible AFTER typing is complete */}
       {isFinished && (
         <div className="absolute inset-0 z-0">
-          <Medusae
-            config={{
-              background: { color: t.background },
-              particles: {
-                colorBase: isDark ? "#4a4a4a" : "#9ca3af",
-                colorOne: "#64b5f6",
-                colorTwo: "#ff6d00",
-                colorThree: "#ffd600",
-              },
-            }}
-          />
+          <Suspense fallback={null}>
+            <Medusae
+              config={{
+                background: { color: t.background },
+                particles: {
+                  colorBase: isDark ? "#4a4a4a" : "#9ca3af",
+                  colorOne: "#64b5f6",
+                  colorTwo: "#ff6d00",
+                  colorThree: "#ffd600",
+                },
+              }}
+            />
+          </Suspense>
         </div>
       )}
 
