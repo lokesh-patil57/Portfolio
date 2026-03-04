@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import arrow from "../../assets/arrow-down.svg";
+import arrow from "/images/arrow-down.svg";
 
 const Button = ({ text, className, id }) => {
   return (
