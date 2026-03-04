@@ -65,6 +65,12 @@ export const T = {
     counterTextSecondary: "#9ca3af",
     counterBorder: "rgba(255,255,255,0.05)",
     counterShadow: "none",
+
+    // About Tokens
+    aboutAccent: "#38bdf8",
+    aboutSurface: "rgba(255,255,255,0.04)",
+    aboutSurfaceBorder: "rgba(255,255,255,0.10)",
+    aboutMuted: "rgba(255,255,255,0.65)",
   },
   light: {
     // Navbar Tokens
@@ -130,5 +136,11 @@ export const T = {
     counterTextSecondary: "#64748b",
     counterBorder: "rgba(0,0,0,0.1)",
     counterShadow: "0 10px 30px -10px rgba(0,0,0,0.1)",
+
+    // About Tokens
+    aboutAccent: "#0ea5e9",
+    aboutSurface: "rgba(15,23,42,0.04)",
+    aboutSurfaceBorder: "rgba(15,23,42,0.10)",
+    aboutMuted: "rgba(15,23,42,0.60)",
   },
 };
