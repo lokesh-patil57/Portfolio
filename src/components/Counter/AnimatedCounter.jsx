@@ -45,7 +45,7 @@ const AnimatedCounter = ({ isDark }) => {
         scrollTrigger: {
           trigger: "#stats-counter",
           start: "top center",
-          toggleActions: "play reverse play reverse", // Enable reverse animation when scrolling back
+          toggleActions: "play none none none", // Only play animation, no reverse on scroll back
         },
         // Add the suffix after counting is complete
         onComplete: () => {
@@ -62,7 +62,7 @@ const AnimatedCounter = ({ isDark }) => {
       className="padding-x-lg xl:mt-0 mt-32"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: false, amount: 0.2 }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       <div className="mx-auto grid-4-cols">
         {counterItems.map((item, index) => (
