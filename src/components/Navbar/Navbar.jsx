@@ -112,7 +112,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
 
               {/* Logo */}
               <Link
-                to="/"
+                to="/#hero"
                 onClick={() => setActiveItem("home")}
                 className="font-bold text-xl z-100 tracking-tight no-underline"
                 style={{ color: t.textPrimary }}
@@ -363,7 +363,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                 {/* Logo */}
                 <div className="flex-1 flex justify-start items-center z-100">
                   <Link
-                    to="/"
+                    to="/#hero"
                     onClick={() => setActiveItem("home")}
                     className="font-bold text-lg whitespace-nowrap hover:scale-110 transition-all duration-300 ease-out no-underline"
                     style={{ color: t.textPrimary }}
