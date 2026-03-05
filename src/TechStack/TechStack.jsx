@@ -1,9 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import TitleHeader from "../components/TitleHeader/TitleHeader.jsx";
 import { techStackIcons } from "../components/constants/index.js";
 import TechIconCardExperience from "../components/Models/Techlogos/TechIconCardExperience";
+
+gsap.registerPlugin(ScrollTrigger);
 const TechStack = ({ isDark = true, t = {} }) => {
   // Animate the tech cards in the skills section
   useGSAP(() => {
@@ -28,7 +31,6 @@ const TechStack = ({ isDark = true, t = {} }) => {
         scrollTrigger: {
           trigger: "#skills", // Trigger the animation when the user scrolls to the #skills wrapper
           start: "top center", // Start the animation when the top of the wrapper is at the center of the screen
-          toggleActions: "play reverse play reverse", // Enable reverse animation when scrolling back
         },
       }
     );

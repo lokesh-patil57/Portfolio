@@ -1,99 +1,71 @@
-import { Center, Environment, Float, OrbitControls, useGLTF, Preload } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, Suspense } from "react";
+import { Center, Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo } from "react";
 import * as THREE from "three";
+import { useIsMobile } from "../../../hooks/useIsMobile";
 
-// Model Loading Component with Error Boundary
-const ModelContent = ({ model, isDark }) => {
-  const { scene: gltfScene, nodes, materials } = useGLTF(model.modelPath);
-  const { invalidate } = useThree();
+const TechIconCardExperience = ({ model, isDark = true }) => {
+  const isMobile = useIsMobile();
+  const { scene } = useGLTF(model.modelPath);
+  const sceneInstance = useMemo(() => scene.clone(true), [scene]);
 
-  const clonedScene = useMemo(() => {
-    if (!gltfScene) return null;
-    const cloned = gltfScene.clone();
+  const effectiveScale = useMemo(() => {
+    const baseScale = model?.scale ?? 1;
     
-    // Apply material customizations
-    if (model.name === "Three.js" || model.name === "Interactive Developer") {
-      cloned.traverse((child) => {
+    // Use mobileScale if available and on mobile
+    if (isMobile && model?.mobileScale !== undefined) {
+      return model.mobileScale;
+    }
+    
+    if (!isMobile) return baseScale;
+
+    // Keep already-tiny logo models readable; shrink medium/large ones on mobile.
+    const factor =
+      typeof baseScale === "number" && baseScale <= 0.12 ? 1 : baseScale >= 2 ? 0.55 : 0.75;
+
+    if (typeof baseScale === "number") return baseScale * factor;
+    if (Array.isArray(baseScale)) return baseScale.map((v) => (typeof v === "number" ? v * factor : v));
+    return baseScale;
+  }, [isMobile, model?.scale, model?.mobileScale]);
+
+  useEffect(() => {
+    if (model.name === "Interactive Developer") {
+      sceneInstance.traverse((child) => {
         if (child.isMesh) {
-          child.castShadow = true;
-          child.receiveShadow = true;
           if (child.name === "Object_5") {
-            child.material = new THREE.MeshStandardMaterial({ 
-              color: isDark ? "white" : "black",
-              metalness: 0.5,
-              roughness: 0.5
-            });
-            invalidate();
+            child.material = new THREE.MeshStandardMaterial({ color: isDark ? "white" : "black" });
           }
         }
       });
     }
-    return cloned;
-  }, [gltfScene, isDark, model.name, invalidate]);
-
-  useEffect(() => {
-    return () => {
-      // Cleanup
-      if (clonedScene) {
-        clonedScene.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
-            child.geometry?.dispose();
-            if (Array.isArray(child.material)) {
-              child.material.forEach((mat) => mat?.dispose());
-            } else {
-              child.material?.dispose();
-            }
-          }
-        });
-      }
-    };
-  }, [clonedScene]);
-
-  if (!clonedScene) return null;
+  }, [model.name, sceneInstance, isDark]);
 
   return (
-    <group scale={model.scale} rotation={model.rotation}>
-      <Center>
-        <primitive object={clonedScene} />
-      </Center>
-    </group>
-  );
-};
+    <Canvas
+      dpr={[1, 1.5]}
+      camera={{ position: [0, 0, 8], fov: 45, near: 0.1, far: 100 }}
+      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+    >
+      <Suspense fallback={null}>
+        <ambientLight intensity={isDark ? 0.5 : 0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={isDark ? 1.5 : 2} />
+        <spotLight
+          position={[10, 15, 10]}
+          angle={0.3}
+          penumbra={1}
+          intensity={isDark ? 2.5 : 3}
+        />
+        <Environment preset={isDark ? "city" : "sunset"} />
+        <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
+          <Center>
+            <group scale={effectiveScale} rotation={model.rotation}>
+              <primitive object={sceneInstance} />
+            </group>
+          </Center>
+        </Float>
 
-// Fallback component
-const ModelFallback = () => (
-  <group>
-    <mesh>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color="#333" />
-    </mesh>
-  </group>
-);
-
-const TechIconCardExperience = ({ model, isDark = true }) => {
-  // Preload models for better performance
-  useGLTF.preload(model.modelPath);
-
-  return (
-    <Canvas dpr={[1, 2]} performance={{ min: 0.5, max: 1 }}>
-      <ambientLight intensity={isDark ? 0.5 : 0.8} />
-      <directionalLight position={[5, 5, 5]} intensity={isDark ? 1.5 : 2} castShadow />
-      <spotLight
-        position={[10, 15, 10]}
-        angle={0.3}
-        penumbra={1}
-        intensity={isDark ? 2.5 : 3}
-        castShadow
-      />
-      <Environment preset={isDark ? "city" : "sunset"} />
-      <Float speed={5.5} rotationIntensity={0.5} floatIntensity={0.9}>
-        <Suspense fallback={<ModelFallback />}>
-          <ModelContent model={model} isDark={isDark} />
-        </Suspense>
-      </Float>
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={2} />
-      <Preload all />
+        <OrbitControls enableZoom={false} />
+      </Suspense>
     </Canvas>
   );
 };
