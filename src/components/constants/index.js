@@ -131,18 +131,21 @@ const techStackIcons = [
     name: "Three.js",
     modelPath: "/models/three.js-transformed.glb",
     scale: 0.05,
+    mobileScale: 0.03,
     rotation: [0, 0, 0],
   },
   {
     name: "Git",
     modelPath: "/models/git-svg-transformed.glb",
     scale: 0.05,
+    mobileScale: 0.03,
     rotation: [0, -Math.PI / 4, 0],
   },
   {
     name: "Figma",
     modelPath: "/models/figma-transformed.glb",
     scale: 1.2,
+    mobileScale: 0.6,
     rotation: [Math.PI / 2, 0, 0],
   },
 ];
