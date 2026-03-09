@@ -28,9 +28,9 @@ const GlowCard = ({ card, index, children, isDark = true, t = {} }) => {
     <motion.div
       ref={(el) => (cardRefs.current[index] = el)}
       onMouseMove={(e) => handleMouseMove(index, e)}
-      className="card card-border timeline-card rounded-xl p-10 mb-5 break-inside-avoid-column transition-colors duration-500"
+      className={`card card-border timeline-card rounded-xl p-10 mb-5 break-inside-avoid-column transition-colors duration-500 ${isDark ? "bg-black-100" : ""}`}
       style={{
-        backgroundColor: isDark ? "#0e0e10" : "#ffffff",
+        backgroundColor: isDark ? undefined : "#ffffff",
         borderColor: t.counterBorder || (isDark ? "#1c1c21" : "rgba(0,0,0,0.1)")
       }}
       initial={{ opacity: 0, scale: 0.95 }}

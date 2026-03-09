@@ -1,10 +1,11 @@
 import { Center, Environment, Float, OrbitControls, useGLTF } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useMemo } from "react";
+import React, { Suspense, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import { useIsMobile } from "../../../hooks/useIsMobile";
+import { DemandFrameloop } from "../../perf/DemandFrameloop";
 
-const TechIconCardExperience = ({ model, isDark = true }) => {
+const TechIconCardExperience = ({ model, isDark = true, active = true }) => {
   const isMobile = useIsMobile();
   const { scene } = useGLTF(model.modelPath);
   const sceneInstance = useMemo(() => scene.clone(true), [scene]);
@@ -43,9 +44,12 @@ const TechIconCardExperience = ({ model, isDark = true }) => {
   return (
     <Canvas
       dpr={[1, 1.5]}
+      frameloop="demand"
+      performance={{ min: 0.5 }}
       camera={{ position: [0, 0, 8], fov: 45, near: 0.1, far: 100 }}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
+      gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
     >
+      <DemandFrameloop active={active} />
       <Suspense fallback={null}>
         <ambientLight intensity={isDark ? 0.5 : 0.8} />
         <directionalLight position={[5, 5, 5]} intensity={isDark ? 1.5 : 2} />
@@ -70,4 +74,4 @@ const TechIconCardExperience = ({ model, isDark = true }) => {
   );
 };
 
-export default TechIconCardExperience;
+export default React.memo(TechIconCardExperience);

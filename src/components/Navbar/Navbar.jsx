@@ -21,6 +21,8 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
   const navRef = useRef(null); // wraps the mobile top-bar for outside-click detection
   const desktopNavRef = useRef(null); // desktop pill (for LiquidCursor)
 
+  const mobileDockItems = navItems.filter((item) => item.id !== "home");
+
   // Shared cursor state for desktop dock effect
   const [cursor, setCursor] = useState({ x: -9999, y: -9999 });
 
@@ -295,7 +297,7 @@ const Navbar = ({ show = true, isDark, setIsDark }) => {
                 boxShadow: t.dockShadow,
               }}
             >
-              {navItems.map((item) => (
+              {mobileDockItems.map((item) => (
                 <MobileDockItem
                   key={item.id}
                   item={item}

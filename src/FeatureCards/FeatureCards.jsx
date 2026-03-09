@@ -4,7 +4,7 @@ import { abilities } from "../components/constants/index.js";
 
 const formats = abilities;
 
-export default function ExportFormats({ isDark = true, t = {} }) {
+function ExportFormats({ isDark = true, t = {} }) {
   const rectRef = useRef(null);
   const rafRef = useRef(0);
 
@@ -71,9 +71,9 @@ export default function ExportFormats({ isDark = true, t = {} }) {
                   e.currentTarget.style.transform = "scale(1.02)";
                   e.currentTarget.style.borderColor = isDark ? "rgba(59,130,246,0.6)" : "rgba(2,132,199,0.6)";
                 }}
-                className={`group relative rounded-3xl p-10 transition-all duration-300`}
+                className={`group relative rounded-3xl p-10 transition-all duration-300 ${isDark ? "bg-black-100" : ""}`}
                 style={{
-                  backgroundColor: isDark ? "#0e0e10" : t.counterBg,
+                  backgroundColor: isDark ? undefined : t.counterBg,
                   borderColor: t.counterBorder,
                   borderWidth: "1px",
                   boxShadow: t.counterShadow
@@ -130,3 +130,5 @@ export default function ExportFormats({ isDark = true, t = {} }) {
     </section>
   );
 }
+
+export default React.memo(ExportFormats);

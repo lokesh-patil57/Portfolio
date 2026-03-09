@@ -1,11 +1,19 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import React from "react";
 
 import Computer from "./Computer";
 
 const ContactExperience = () => {
   return (
-    <Canvas shadows camera={{ position: [0, 3, 7], fov: 45 }}>
+    <Canvas
+      shadows
+      dpr={[1, 1.5]}
+      frameloop="demand"
+      gl={{ antialias: false }}
+      performance={{ min: 0.5 }}
+      camera={{ position: [0, 3, 7], fov: 45 }}
+    >
       <ambientLight intensity={0.8} />
       <directionalLight
         position={[5, 9, 1]}
@@ -38,4 +46,4 @@ const ContactExperience = () => {
   );
 };
 
-export default ContactExperience;
+export default React.memo(ContactExperience);

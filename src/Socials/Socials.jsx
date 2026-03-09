@@ -1,6 +1,7 @@
 import { socials } from "../components/constants/index.js";
 import TitleHeader from "../components/TitleHeader/TitleHeader";
 import GlowCard from "../components/GlowCard/GlowCard";
+import React from "react";
 
 const Socials = ({ isDark = true, t = {} }) => {
   return (
@@ -41,4 +42,4 @@ const Socials = ({ isDark = true, t = {} }) => {
   );
 };
 
-export default Socials;
+export default React.memo(Socials);

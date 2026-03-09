@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { logoIconsList } from "../constants";
 import { T } from "../../constants/theme";
+import React from "react";
 
 const LogoIcon = ({ icon, isDark, index }) => {
   return (
@@ -69,4 +70,4 @@ const LogoShowcase = ({ isDark }) => {
 
 const LogoShowcaseWrapper = ({ isDark }) => <LogoShowcase isDark={isDark} />;
 
-export default LogoShowcaseWrapper;
+export default React.memo(LogoShowcaseWrapper);

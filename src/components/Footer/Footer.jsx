@@ -56,6 +56,10 @@ const FooterIcon = ({ img, isDark }) => {
       <img 
         src={img.imgPath} 
         alt="social images" 
+        loading="lazy"
+        decoding="async"
+        width={32}
+        height={32}
         style={{ 
           filter: isDark ? "brightness(0) invert(1)" : "brightness(0)"
         }} 
@@ -86,4 +90,4 @@ const Footer = ({ isDark = true, t = {} }) => {
   )
 }
 
-export default Footer
+export default React.memo(Footer)

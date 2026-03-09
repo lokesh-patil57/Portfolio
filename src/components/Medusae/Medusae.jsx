@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/immutability */
-import { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import "./medusae.css";
 import MEDUSAE_DEFAULTS from "./defaults.js";
+import { DemandFrameloop } from "../perf/DemandFrameloop";
 
 const mergeConfig = (config) => ({
   cursor: { ...MEDUSAE_DEFAULTS.cursor, ...(config?.cursor ?? {}) },
@@ -408,7 +409,15 @@ const Medusae = ({ className, config, style }) => {
       className={className ? `medusae-root ${className}` : "medusae-root"}
       style={style}
     >
-      <Canvas className="medusae-canvas" camera={{ position: [0, 0, 5] }}>
+      <Canvas
+        className="medusae-canvas"
+        dpr={[1, 1.5]}
+        frameloop="demand"
+        gl={{ antialias: false }}
+        performance={{ min: 0.5 }}
+        camera={{ position: [0, 0, 5] }}
+      >
+        <DemandFrameloop active />
         <color attach="background" args={[merged.background.color]} />
         <Particles config={config} />
       </Canvas>
@@ -416,4 +425,4 @@ const Medusae = ({ className, config, style }) => {
   );
 };
 
-export default Medusae;
+export default React.memo(Medusae);

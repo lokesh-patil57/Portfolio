@@ -173,7 +173,7 @@ const About = ({ isDark = true, t = {} }) => {
               </div>
               <div>
                 <div className="text-3xl font-extrabold" style={{ color: accent }}>
-                  100+
+                  10+
                 </div>
                 <div className="mt-1 text-sm" style={{ color: muted }}>
                   Projects Delivered
