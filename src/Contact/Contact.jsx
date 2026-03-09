@@ -1,10 +1,15 @@
-import { useRef, useState } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import TitleHeader from "../components/TitleHeader/TitleHeader";
-import ContactExperience from "../components/Models/Contact/ContactExperience";
+import SectionFallback from "../components/Loading/SectionFallback";
+import { useIsMobile } from "../hooks/useIsMobile";
+const ContactExperience = React.lazy(
+  () => import("../components/Models/Contact/ContactExperience"),
+);
 
 const Contact = ({ isDark = true, t = {} }) => {
   const formRef = useRef(null);
+  const isMobile = useIsMobile();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     from_name: "",
@@ -30,7 +35,7 @@ const Contact = ({ isDark = true, t = {} }) => {
       );
       alert("Message sent successfully 🚀");
       // Reset form and stop loading
-      setForm({ name: "", email: "", message: "" });
+      setForm({ from_name: "", from_email: "", message: "" });
     } catch (error) {
       console.error("EmailJS Error:", error); // Optional: show toast
     } finally {
@@ -54,9 +59,9 @@ const Contact = ({ isDark = true, t = {} }) => {
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
             <div
-              className="flex-center card-border rounded-xl p-10 transition-colors duration-500"
+              className={`flex-center card-border rounded-xl p-10 transition-colors duration-500 ${isDark ? "bg-black-100" : ""}`}
               style={{
-                backgroundColor: isDark ? "#0e0e10" : "#ffffff",
+                backgroundColor: isDark ? undefined : "#ffffff",
                 borderColor:
                   t.counterBorder || (isDark ? "#1c1c21" : "rgba(0,0,0,0.1)"),
               }}
@@ -67,14 +72,17 @@ const Contact = ({ isDark = true, t = {} }) => {
                 className="w-full flex flex-col gap-7"
               >
                 <div>
-                  <label htmlFor="name" style={{ color: "#000000" }}>
+                  <label
+                    htmlFor="name"
+                    style={{ color: isDark ? "#ffffff" : "#000000" }}
+                  >
                     Your name
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="from_name"
-                    value={form.name}
+                    value={form.from_name}
                     onChange={handleChange}
                     placeholder="What's your good name?"
                     required
@@ -87,14 +95,17 @@ const Contact = ({ isDark = true, t = {} }) => {
                 </div>
 
                 <div>
-                  <label htmlFor="email" style={{ color: "#000000" }}>
+                  <label
+                    htmlFor="email"
+                    style={{ color: isDark ? "#ffffff" : "#000000" }}
+                  >
                     Your Email
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="from_email"
-                    value={form.email}
+                    value={form.from_email}
                     onChange={handleChange}
                     placeholder="What's your email address?"
                     required
@@ -107,7 +118,10 @@ const Contact = ({ isDark = true, t = {} }) => {
                 </div>
 
                 <div>
-                  <label htmlFor="message" style={{ color: "#000000" }}>
+                  <label
+                    htmlFor="message"
+                    style={{ color: isDark ? "#ffffff" : "#000000" }}
+                  >
                     Your Message
                   </label>
                   <textarea
@@ -127,10 +141,16 @@ const Contact = ({ isDark = true, t = {} }) => {
                 </div>
 
                 <button type="submit">
-                  <div className="cta-button group">
+                  <div
+                    className="cta-button group"
+                    style={{
+                      transform: isMobile ? "scale(0.88)" : "scale(1)",
+                      transformOrigin: "left center",
+                    }}
+                  >
                     <div className="bg-circle" />
                     <p className="text">
-                      {loading ? "Sending..." : "Send Message"}
+                      {loading ? "Sending..." : isMobile ? "SEND" : "Send Message"}
                     </p>
                     <div className="arrow-wrapper">
                       <img
@@ -138,8 +158,8 @@ const Contact = ({ isDark = true, t = {} }) => {
                         alt="arrow"
                         loading="lazy"
                         decoding="async"
-                        width={20}
-                        height={20}
+                        width={isMobile ? 16 : 20}
+                        height={isMobile ? 16 : 20}
                       />
                     </div>
                   </div>
@@ -149,7 +169,10 @@ const Contact = ({ isDark = true, t = {} }) => {
           </div>
           <div className="xl:col-span-7 min-h-96">
             <div className="bg-[#cd7c2e] w-full h-full hover:cursor-grab rounded-3xl overflow-hidden">
-              <ContactExperience isDark={isDark} t={t} />
+              {/* Perf: delay WebGL chunk until this section is mounted. */}
+              <Suspense fallback={<SectionFallback />}>
+                <ContactExperience isDark={isDark} t={t} />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -158,4 +181,4 @@ const Contact = ({ isDark = true, t = {} }) => {
   );
 };
 
-export default Contact;
+export default React.memo(Contact);

@@ -1,43 +1,95 @@
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import React, { Suspense, useEffect, useMemo, useRef } from "react";
+import { useInViewport } from "../components/perf/useInViewport";
 
 import TitleHeader from "../components/TitleHeader/TitleHeader.jsx";
 import { techStackIcons } from "../components/constants/index.js";
-import TechIconCardExperience from "../components/Models/Techlogos/TechIconCardExperience";
+const TechIconCardExperience = React.lazy(
+  () => import("../components/Models/Techlogos/TechIconCardExperience"),
+);
 
-gsap.registerPlugin(ScrollTrigger);
 const TechStack = ({ isDark = true, t = {} }) => {
+  const scopeRef = useRef(null);
+
   // Animate the tech cards in the skills section
-  useGSAP(() => {
-    // This animation is triggered when the user scrolls to the #skills wrapper
-    // The animation starts when the top of the wrapper is at the center of the screen
-    // The animation is staggered, meaning each card will animate in sequence
-    // The animation ease is set to "power2.inOut", which is a slow-in fast-out ease
-    gsap.fromTo(
-      ".tech-card",
-      {
-        // Initial values
-        y: 50, // Move the cards down by 50px
-        opacity: 0, // Set the opacity to 0
-      },
-      {
-        // Final values
-        y: 0, // Move the cards back to the top
-        opacity: 1, // Set the opacity to 1
-        duration: 1, // Duration of the animation
-        ease: "power2.inOut", // Ease of the animation
-        stagger: 0.2, // Stagger the animation by 0.2 seconds
-        scrollTrigger: {
-          trigger: "#skills", // Trigger the animation when the user scrolls to the #skills wrapper
-          start: "top center", // Start the animation when the top of the wrapper is at the center of the screen
-        },
-      }
-    );
-  });
+  useEffect(() => {
+    let ctx;
+    let cancelled = false;
+
+    // Perf: dynamically import GSAP + ScrollTrigger so they don't hit initial JS.
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          ".tech-card",
+          {
+            y: 50,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power2.inOut",
+            stagger: 0.2,
+            scrollTrigger: {
+              trigger: "#skills",
+              start: "top center",
+            },
+          },
+        );
+      }, scopeRef);
+    })();
+
+    return () => {
+      cancelled = true;
+      ctx?.revert?.();
+    };
+  }, []);
+
+  // Perf: gate each heavy 3D icon so models/WebGL init only when visible.
+  const TechIconWrapper = useMemo(() => {
+    const Comp = ({ model }) => {
+      const { ref: hostRef, inView } = useInViewport({
+        rootMargin: "200px 0px",
+        threshold: 0.01,
+        freezeOnceVisible: true,
+      });
+      const [mounted, setMounted] = React.useState(false);
+
+      useEffect(() => {
+        if (mounted) return;
+        if (inView) setMounted(true);
+      }, [inView, mounted]);
+
+      return (
+        <div ref={hostRef} className="tech-icon-wrapper">
+          {mounted ? (
+            <Suspense fallback={null}>
+              {/* Perf: pause render loop when offscreen (keeps visuals identical when in view). */}
+              <TechIconCardExperience model={model} isDark={isDark} active={inView} />
+            </Suspense>
+          ) : null}
+        </div>
+      );
+    };
+
+    return React.memo(Comp);
+  }, [isDark]);
 
   return (
-    <div id="skills" className="flex-center section-padding transition-colors duration-500" style={{ backgroundColor: t.background || "#000000" }}>
+    <div
+      ref={scopeRef}
+      id="skills"
+      className="flex-center section-padding transition-colors duration-500"
+      style={{ backgroundColor: t.background || "#000000" }}
+    >
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
           title="How I Can Contribute & My Key Skills"
@@ -53,7 +105,7 @@ const TechStack = ({ isDark = true, t = {} }) => {
           {techStackIcons.map((techStackIcon) => (
             <div
               key={techStackIcon.name}
-              className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+              className={`card-border tech-card overflow-hidden group xl:rounded-full rounded-lg ${isDark ? "bg-black-100" : ""}`}
               style={{ 
                 backgroundColor: isDark ? undefined : "rgba(255,255,255,0.5)",
                 borderColor: isDark ? undefined : "rgba(2,132,199,0.3)"
@@ -68,9 +120,7 @@ const TechStack = ({ isDark = true, t = {} }) => {
               <div className="tech-card-content">
                 {/* The tech-icon-wrapper div contains the TechIconCardExperience component, 
                     which renders the 3D model of the tech stack icon. */}
-                <div className="tech-icon-wrapper">
-                  <TechIconCardExperience model={techStackIcon} isDark={isDark} />
-                </div>
+                <TechIconWrapper model={techStackIcon} />
                 {/* The padding-x and w-full classes are used to add horizontal padding to the 
                     text and make it take up the full width of the component. */}
                 <div className="padding-x w-full">
@@ -104,4 +154,4 @@ const TechStack = ({ isDark = true, t = {} }) => {
   );
 };
 
-export default TechStack;
+export default React.memo(TechStack);

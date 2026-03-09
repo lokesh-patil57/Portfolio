@@ -11,6 +11,7 @@ import { T } from "./constants/theme";
 import LazyMount from "./components/perf/LazyMount";
 import About from "./About/About";
 import ResumeFallback from "./components/Loading/ResumeFallback";
+import SectionFallback from "./components/Loading/SectionFallback";
 import { NavigationProvider } from "./context/NavigationContext";
 
 const AnimatedCounter = React.lazy(() => import("./components/Counter/AnimatedCounter"));
@@ -93,55 +94,55 @@ const MainPortfolio = ({ isDark, t, setIntroFinished }) => {
 
       {/* Delay below-the-fold sections to reduce initial JS + DOM work */}
       <LazyMount minHeight="40vh" sectionId="counter">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <AnimatedCounter isDark={isDark} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="100vh" sectionId="projects-section">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <Projects isDark={isDark} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="30vh" sectionId="logos">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <LogoSection isDark={isDark} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="50vh" sectionId="features">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <FeatureCards isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="60vh" sectionId="experience">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <ExperienceSection isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="60vh" sectionId="skills">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <TechStack isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="60vh" sectionId="socials">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <Socials isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="70vh" sectionId="contact">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <Contact isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
 
       <LazyMount minHeight="20vh" sectionId="footer">
-        <Suspense fallback={null}>
+        <Suspense fallback={<SectionFallback />}>
           <Footer isDark={isDark} t={t} />
         </Suspense>
       </LazyMount>
@@ -165,7 +166,20 @@ function App() {
 
   // Preload ResumeView component chunk on initial render
   useEffect(() => {
-    import("./pages/ResumeView");
+    // Perf: defer non-critical route prefetch so it doesn't compete with FCP/LCP.
+    let idleId;
+    let timeoutId;
+
+    if (window.requestIdleCallback) {
+      idleId = window.requestIdleCallback(() => import("./pages/ResumeView"));
+    } else {
+      timeoutId = window.setTimeout(() => import("./pages/ResumeView"), 3000);
+    }
+
+    return () => {
+      if (idleId !== undefined) window.cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+    };
   }, []);
 
   return (

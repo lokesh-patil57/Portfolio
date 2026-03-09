@@ -187,4 +187,4 @@ const Projects = ({ isDark = true }) => {
   );
 };
 
-export default Projects;
+export default React.memo(Projects);
