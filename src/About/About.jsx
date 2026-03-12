@@ -41,8 +41,8 @@ const services = [
     ),
   },
   {
-    title: "Design Consulting",
-    desc: "Practical guidance on layout, hierarchy, and UX—so the site feels premium and clear.",
+    title: "Backend Development",
+    desc: "Robust server-side logic, database architecture, and secure RESTful APIs using the MERN stack.",
     icon: (
       <svg
         width="22"
@@ -54,7 +54,10 @@ const services = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+        <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+        <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+        <line x1="6" y1="6" x2="6" y2="6.01" />
+        <line x1="6" y1="18" x2="6" y2="18.01" />
       </svg>
     ),
   },
@@ -172,7 +175,7 @@ const About = ({ isDark = true, t = {} }) => {
               transition={{ duration: 0.6, delay: 0.14, ease: "easeOut" }}
               className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
-              <a href="/#contact" className="no-underline">
+              <a href="mailto:leafycloud57@gmail.com" className="no-underline">
                 <button
                   className="w-full sm:w-auto px-6 py-3 rounded-xl font-semibold transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]"
                   style={{
@@ -189,7 +192,7 @@ const About = ({ isDark = true, t = {} }) => {
                 </button>
               </a>
 
-              <a href="/#contact" className="no-underline">
+              <a href="#contact" className="no-underline">
                 <button
                   className="w-full sm:w-auto px-6 py-3 rounded-xl font-semibold transition-colors duration-200"
                   style={{
