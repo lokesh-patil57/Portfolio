@@ -280,7 +280,7 @@ section {
       @apply flex items-center justify-center gap-5;
 
       .icon {
-        @apply border border-black-50 bg-black-100 flex justify-center items-center rounded-xl size-10 md:size-12 cursor-pointer transition-all duration-500 hover:bg-black-50;
+        @apply border border-black-50 bg-black-100 flex justify-center items-center rounded-xl size-6 md:size-12 cursor-pointer transition-all duration-500 hover:bg-black-50;
       }
 
       img {
@@ -380,7 +380,7 @@ section {
   height: 100%;
   position: absolute;
   overflow: hidden;
-  animation: marquee 60s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
 .marquee-item {
@@ -468,52 +468,51 @@ section {
 }
 
 
-.tech-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:20px;
-margin-top:60px;
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  margin-top: 60px;
 }
 
-.card-border{
-border:1px solid rgba(255,255,255,0.15);
-background:linear-gradient(
-145deg,
-rgba(255,255,255,0.08),
-rgba(255,255,255,0.02)
-);
-box-shadow:
-0 10px 30px rgba(0,0,0,0.4),
-inset 0 0 20px rgba(255,255,255,0.05);
-transition:all .4s ease;
+.card-border {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02));
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  transition: all .4s ease;
 }
 
-.tech-card:hover{
-border-color:#38bdf8;
-box-shadow:
-0 15px 40px rgba(56,189,248,0.3);
+.tech-card:hover {
+  border-color: #38bdf8;
+  box-shadow:
+    0 15px 40px rgba(56, 189, 248, 0.3);
 }
 
-.animated-bg{
-position:absolute;
-width:100%;
-height:100%;
-background:radial-gradient(
-circle at 30% 30%,
-#0ea5e9,
-transparent 40%
-),
-radial-gradient(
-circle at 70% 60%,
-#6366f1,
-transparent 40%
-);
-filter:blur(120px);
-opacity:.4;
-animation:bgMove 10s infinite alternate;
+.animated-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 30%,
+      #0ea5e9,
+      transparent 40%),
+    radial-gradient(circle at 70% 60%,
+      #6366f1,
+      transparent 40%);
+  filter: blur(120px);
+  opacity: .4;
+  animation: bgMove 10s infinite alternate;
 }
 
-@keyframes bgMove{
-from{transform:translateY(-40px)}
-to{transform:translateY(40px)}
+@keyframes bgMove {
+  from {
+    transform: translateY(-40px)
+  }
+
+  to {
+    transform: translateY(40px)
+  }
 }
