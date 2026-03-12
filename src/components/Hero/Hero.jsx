@@ -159,9 +159,8 @@ const Hero = ({ onComplete, isDark }) => {
         initial={{ opacity: 0, y: 50 }}
         animate={isFinished ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        className={`mt-12 flex flex-col items-center gap-6 z-30 ${
-          !isFinished ? "pointer-events-none select-none" : ""
-        }`}
+        className={`mt-12 flex flex-col items-center gap-6 z-30 ${!isFinished ? "pointer-events-none select-none" : ""
+          }`}
       >
         <p
           className="md:text-xl relative z-10 pointer-events-none text-center transition-colors duration-500"
@@ -173,7 +172,7 @@ const Hero = ({ onComplete, isDark }) => {
         <Button
           text="See My Work"
           className="md:w-80 md:h-16 w-60 h-12"
-          id="projects-section"
+          id="about"
         />
       </motion.div>
 
