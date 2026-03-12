@@ -1,3 +1,4 @@
+import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 const services = [
@@ -60,6 +61,54 @@ const services = [
 ];
 
 const About = ({ isDark = true, t = {} }) => {
+  const containerRef = useRef(null);
+  const statsRef = useRef([]);
+
+  useEffect(() => {
+    let ctx;
+    let cancelled = false;
+
+    (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+      gsap.registerPlugin(ScrollTrigger);
+
+      ctx = gsap.context(() => {
+        statsRef.current.forEach((stat) => {
+          if (!stat) return;
+          const numberElement = stat.querySelector(".stat-number");
+          if (!numberElement) return;
+          const targetValue = parseFloat(numberElement.getAttribute("data-value"));
+
+          gsap.set(numberElement, { innerText: "0" });
+
+          gsap.to(numberElement, {
+            innerText: targetValue,
+            duration: 1,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            scrollTrigger: {
+              trigger: stat,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+            onComplete: () => {
+              numberElement.textContent = targetValue;
+            },
+          });
+        });
+      }, containerRef);
+    })();
+
+    return () => {
+      cancelled = true;
+      ctx?.revert?.();
+    };
+  }, []);
+
   const accent = t.aboutAccent || (isDark ? "#E8FF5A" : "#0ea5e9");
   const surface = t.aboutSurface || (isDark ? "rgba(255,255,255,0.04)" : "rgba(15,23,42,0.04)");
   const surfaceBorder =
@@ -161,19 +210,20 @@ const About = ({ isDark = true, t = {} }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="mt-10 grid grid-cols-2 gap-6 max-w-sm"
+              className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8 max-w-sm"
+              ref={containerRef}
             >
-              <div>
+              <div ref={(el) => (statsRef.current[0] = el)}>
                 <div className="text-3xl font-extrabold" style={{ color: accent }}>
-                  98%
+                  <span className="stat-number" data-value="98">0</span>%
                 </div>
                 <div className="mt-1 text-sm" style={{ color: muted }}>
                   Satisfaction Rate
                 </div>
               </div>
-              <div>
+              <div ref={(el) => (statsRef.current[1] = el)}>
                 <div className="text-3xl font-extrabold" style={{ color: accent }}>
-                  10+
+                  <span className="stat-number" data-value="10">0</span>+
                 </div>
                 <div className="mt-1 text-sm" style={{ color: muted }}>
                   Projects Delivered
