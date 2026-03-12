@@ -12,12 +12,12 @@ const TechIconCardExperience = ({ model, isDark = true, active = true }) => {
 
   const effectiveScale = useMemo(() => {
     const baseScale = model?.scale ?? 1;
-    
+
     // Use mobileScale if available and on mobile
     if (isMobile && model?.mobileScale !== undefined) {
       return model.mobileScale;
     }
-    
+
     if (!isMobile) return baseScale;
 
     // Keep already-tiny logo models readable; shrink medium/large ones on mobile.
@@ -68,7 +68,7 @@ const TechIconCardExperience = ({ model, isDark = true, active = true }) => {
           </Center>
         </Float>
 
-        <OrbitControls enableZoom={false} />
+        <OrbitControls enableZoom={false} enabled={!isMobile} />
       </Suspense>
     </Canvas>
   );
