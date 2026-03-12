@@ -48,6 +48,7 @@ const TechIconCardExperience = ({ model, isDark = true, active = true }) => {
       performance={{ min: 0.5 }}
       camera={{ position: [0, 0, 8], fov: 45, near: 0.1, far: 100 }}
       gl={{ antialias: false, alpha: true, powerPreference: "high-performance" }}
+      style={{ touchAction: "pan-y", pointerEvents: isMobile ? "none" : "auto" }}
     >
       <DemandFrameloop active={active} />
       <Suspense fallback={null}>

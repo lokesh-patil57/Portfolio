@@ -7,7 +7,7 @@
 
 html,
 body {
-  width: 100dvw;
+  width: 100%;
   overflow-x: hidden;
   background-color: black;
   color: white;
@@ -16,7 +16,7 @@ body {
 }
 
 section {
-  width: 100dvw;
+  width: 100%;
 }
 
 @theme {
@@ -216,8 +216,6 @@ section {
 
   .exp-card-wrapper {
     @apply flex flex-col-reverse xl:flex-row xl:gap-20 gap-10 justify-between;
-    content-visibility: auto;
-    contain-intrinsic-size: 0 400px;
   }
 
   .gradient-edge {
@@ -368,7 +366,7 @@ section {
 
 /* marquee */
 .marquee {
-  width: 100dvw;
+  width: 100%;
   overflow: hidden;
   position: relative;
 }
