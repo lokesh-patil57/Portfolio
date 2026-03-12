@@ -3,23 +3,23 @@ import "./Projects.css";
 
 // ─── Image carousel data ──────────────────────────────────────────────────────
 const projectImages = [
-  "/images/project1.avif",
-  "/images/project2.avif",
-  "/images/project3.avif",
-  "/images/project4.avif",
-  "/images/project5.avif",
-  "/images/project6.avif",
-  "/images/project7.avif",
-  "/images/project8.avif",
-  "/images/project9.avif",
-  "/images/project10.avif",
+  { src: "/images/project1.avif", link: "https://github.com/lokesh-patil57/CodeSeed" },
+  { src: "/images/project2.avif", link: "https://github.com/lokesh-patil57/MakeTechBerry" },
+  { src: "/images/project3.avif", link: "https://github.com/lokesh-patil57/SmartEAI" },
+  { src: "/images/project4.avif", link: "https://github.com/lokesh-patil57/CodeSeed" },
+  { src: "/images/project5.avif", link: "https://task-manager-alpha-sand-51.vercel.app/" },
+  { src: "/images/project6.avif", link: "https://staynest-yb3g.onrender.com/" },
+  { src: "/images/project7.avif", link: "https://github.com/lokesh-patil57/Ayush-Portal" },
+  { src: "/images/project8.avif", link: "https://github.com/lokesh-patil57/Smart-ITR-Chatbot" },
+  { src: "/images/project9.avif", link: "https://aifinancialassistant.netlify.app/" },
+  { src: "/images/project10.avif", link: "https://github.com/lokesh-patil57/CyberShield" },
 ];
 
 const modelBgImage = "/images/2.avif";
 
 // ─── Projects Section ─────────────────────────────────────────────────────────
 const Projects = ({ isDark = true }) => {
-  const projectRef = useRef(null);
+  const projectRef = useRef(null); 
   const projectTextRef = useRef(null);
   const modelBgRef = useRef(null);
   const worksTextRef = useRef(null);
@@ -60,9 +60,8 @@ const Projects = ({ isDark = true }) => {
 
   // ─── Shared animation class helper ──────────────────────────────────────────
   const fadeSlide = (delay) => ({
-    className: `transition-all duration-700 ${
-      animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
-    }`,
+    className: `transition-all duration-700 ${animateIn ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+      }`,
     style: { transitionDelay: animateIn ? delay : "0ms" },
   });
 
@@ -70,9 +69,8 @@ const Projects = ({ isDark = true }) => {
     <div
       id="projects-section"
       ref={projectRef}
-      className={`relative w-full h-screen overflow-hidden transition-colors duration-500 ${
-        isMobile ? "is-mobile" : isTablet ? "is-tablet" : "is-desktop"
-      }`}
+      className={`relative w-full h-screen overflow-hidden transition-colors duration-500 ${isMobile ? "is-mobile" : isTablet ? "is-tablet" : "is-desktop"
+        }`}
       style={{
         backgroundColor: isDark ? "#000000" : "#ffffff",
         color: isDark ? "#ffffff" : "#111111",
@@ -88,7 +86,7 @@ const Projects = ({ isDark = true }) => {
             animation: "autoRun 20s linear infinite",
           }}
         >
-          {projectImages.map((img, index) => (
+          {projectImages.map((project, index) => (
             <div
               key={index}
               className="carousel-item absolute inset-0"
@@ -96,15 +94,22 @@ const Projects = ({ isDark = true }) => {
                 "--i": index,
               }}
             >
-              <img
-                src={img}
-                alt={`project-${index + 1}`}
-                className="w-full h-full object-cover rounded-lg shadow-lg"
-                loading="lazy"
-                decoding="async"
-                width={640}
-                height={640}
-              />
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full h-full block"
+              >
+                <img
+                  src={project.src}
+                  alt={`project-${index + 1}`}
+                  className="w-full h-full object-cover rounded-lg shadow-lg"
+                  loading="lazy"
+                  decoding="async"
+                  width={640}
+                  height={640}
+                />
+              </a>
             </div>
           ))}
         </div>
@@ -131,9 +136,8 @@ const Projects = ({ isDark = true }) => {
           {/* Model / hero background image */}
           <div
             ref={modelBgRef}
-            className={`model-bg absolute -translate-x-1/2 -translate-y-1/2 z-1 ${
-              fadeSlide("400ms").className
-            }`}
+            className={`model-bg absolute -translate-x-1/2 -translate-y-1/2 z-1 ${fadeSlide("400ms").className
+              }`}
             style={{
               backgroundImage: `url('${modelBgImage}')`,
               backgroundSize: "contain",
@@ -146,9 +150,8 @@ const Projects = ({ isDark = true }) => {
           {/* "Works" outline text */}
           <h1
             ref={worksTextRef}
-            className={`works-heading absolute -translate-x-1/2 z-2 ${
-              fadeSlide("800ms").className
-            }`}
+            className={`works-heading absolute -translate-x-1/2 z-2 ${fadeSlide("800ms").className
+              }`}
             style={{
               WebkitTextStroke: isDark ? "2px white" : "2px #1a1a1a",
               color: "transparent",
@@ -163,9 +166,8 @@ const Projects = ({ isDark = true }) => {
           {/* Author block */}
           <div
             ref={authorRef}
-            className={`author-block absolute z-40 ${
-              fadeSlide("1200ms").className
-            }`}
+            className={`author-block absolute z-40 ${fadeSlide("1200ms").className
+              }`}
             style={fadeSlide("1200ms").style}
           >
             <h2
