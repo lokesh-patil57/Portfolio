@@ -115,7 +115,7 @@ const Projects = ({ isDark = true }) => {
         </div>
 
         {/* Overlay content */}
-        <div className="absolute inset-0 w-full h-full flex flex-col justify-between">
+        <div className="absolute inset-0 w-full h-full flex flex-col justify-between pointer-events-none">
           {/* "Project" heading */}
           <div
             ref={projectTextRef}

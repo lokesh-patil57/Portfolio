@@ -185,6 +185,8 @@
   width: 140px !important;
   height: 180px !important;
   animation-duration: 25s !important;
+  z-index: 50 !important;
+  pointer-events: auto !important;
 }
 #projects-section.is-tablet .carousel-item {
   transform: rotateY(calc(var(--i) * 36deg)) translateZ(400px) !important;
@@ -212,6 +214,7 @@
   bottom: 50px !important;
   right: 40px !important;
   text-align: right !important;
+  pointer-events: auto !important;
 }
 
 #projects-section.is-tablet .project-heading h1 {
@@ -292,6 +295,8 @@
   width: 100px !important;
   height: 140px !important;
   animation-duration: 30s !important;
+  z-index: 50 !important;
+  pointer-events: auto !important;
 }
 #projects-section.is-mobile .project-heading {
   left: 50% !important;
@@ -317,10 +322,11 @@
 }
 #projects-section.is-mobile .author-block {
   bottom: 60px !important;
-  width: 100% !important;
+  width: 100px !important;
   text-align: center !important;
   left: 50% !important;
   transform: translateX(-50%) !important;
+  pointer-events: auto !important;
 }
 
 #projects-section.is-mobile .project-heading h1 {
