@@ -13,6 +13,7 @@ import About from "./About/About";
 import ResumeFallback from "./components/Loading/ResumeFallback";
 import SectionFallback from "./components/Loading/SectionFallback";
 import { NavigationProvider } from "./context/NavigationContext";
+import { Analytics } from "@vercel/analytics/react"
 
 const AnimatedCounter = React.lazy(() => import("./components/Counter/AnimatedCounter"));
 const Projects = React.lazy(() => import("./Project/Projects"));
@@ -26,6 +27,8 @@ const Socials = React.lazy(() => import("./Socials/Socials"));
 const Contact = React.lazy(() => import("./Contact/Contact"));
 const Footer = React.lazy(() => import("./components/Footer/Footer"));
 const ResumeView = React.lazy(() => import("./pages/ResumeView"));
+
+
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -214,7 +217,9 @@ function App() {
           </Routes>
         </div>
       </NavigationProvider>
+        <Analytics />
     </Router>
+    
   );
 }
 
