@@ -5,7 +5,7 @@ import "./Projects.css";
 const projectImages = [
   { src: "/images/project1.avif", link: "https://github.com/lokesh-patil57/CodeSeed" },
   { src: "/images/project2.avif", link: "https://github.com/lokesh-patil57/MakeTechBerry" },
-  { src: "/images/project3.avif", link: "https://github.com/lokesh-patil57/SmartEAI" },
+  { src: "/images/project3.avif", link: "https://smart-eai.vercel.app" },
   { src: "/images/project4.avif", link: "https://github.com/lokesh-patil57/CodeSeed" },
   { src: "/images/project5.avif", link: "https://task-manager-alpha-sand-51.vercel.app/" },
   { src: "/images/project6.avif", link: "https://staynest-yb3g.onrender.com/" },
